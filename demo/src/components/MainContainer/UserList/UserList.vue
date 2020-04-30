@@ -6,7 +6,7 @@
         </div>
 
         <div id="userListTable">
-            <el-tabs v-model="activeName" @tab-click="handleClick">
+            <el-tabs v-model="activeName">
                 <el-tab-pane label="普通用户" name="first">
                     <el-table
                         stripe
@@ -59,10 +59,10 @@
                         <template slot-scope="scope">
                             <el-button
                                     size="mini"
-                                    @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+                                    @click="handleWatch(scope.$index, scope.row)">查看</el-button>
                             <el-button
                                     size="mini"
-                                    @click="handleDelete(scope.$index, scope.row)">通知</el-button>
+                                    @click="sendMessage(scope.$index, scope.row)">通知</el-button>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -124,6 +124,13 @@
                     </el-table>
                 </el-tab-pane>
             </el-tabs>
+            <div style="width: 100%;height: 50px"></div>
+            <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    @current-change="handleCurrentChange"
+                    :total="this.totalPage">
+            </el-pagination>
 
         </div>
     </div>
@@ -136,7 +143,8 @@
         data(){
             return{
                 activeName:'first',
-                userData: [{
+                userData: [
+                    {
                     userName:'爱吃萝卜的熊',
                     userSex:'男',
                     userID:'17328',
@@ -197,8 +205,8 @@
                     fansNumber:'67',
                     reportNumber:'2'
                 }],
-
-                adminUserData: [{
+                adminUserData: [
+                    {
                     adminUserNickname:'爱吃萝卜的熊',
                     adminUserName:'萝卜熊',
                     adminUserSex:'男',
@@ -243,7 +251,33 @@
                     adminUserQQ:'-',
                     duties:'审核文章',
                     note:'负责定期检查文章'
-                }]
+                }],
+                totalPage:70
+            }
+        },methods:{
+            handleCurrentChange(val) {
+                console.log(`当前页: ${val}`);
+            },
+            handleWatch:function (index, row) {
+                console.log(index, row);
+            },
+            sendMessage:function () {
+                this.$prompt('请输入通知内容', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消'
+                }).then(({ value }) => {
+                    this.$message({
+                        type: 'success',
+                        message: '已发送通知'
+                    });
+                    // 这里加要做什么操作
+                    console.log(value);
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '取消通知'
+                    });
+                });
             }
         }
     }

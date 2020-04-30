@@ -9,12 +9,16 @@
     import SystemInformation from '../../components/MainContainer/SystemInformation/SystemInformation'
     import UserList from '../../components/MainContainer/UserList/UserList'
     import ArticleList from '../../components/MainContainer/ArticleList/ArticleList'
+    import Announcement from '../../components/MainContainer/Announcement/Announcement'
+    import Article from '../../components/MainContainer/Article/Article'
     export default {
         name: "MainContainer",
         components:{
             SystemInformation,
             UserList,
-            ArticleList
+            ArticleList,
+            Announcement,
+            Article
         },
         data(){
             return{
@@ -34,7 +38,14 @@
                     case '文章列表':
                         this.content='ArticleList';
                         break;
+                    case '公告系统':
+                        this.content='Announcement';
+                        break;
                 }
+            })
+            EventBus.$on('ReadArticle',(msg)=>{
+                this.content='Article';
+                console.log(msg);
             })
         }
     }

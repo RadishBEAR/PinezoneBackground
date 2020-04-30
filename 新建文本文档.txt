@@ -1,0 +1,15 @@
+this.$prompt('请输入删除原因', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消'
+                    }).then(({ value }) => {
+                        this.$message({
+                            type: 'success',
+                            message: '已删除文章'
+                        });
+                        console.log(value);
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '取消输入'
+                        });
+                    });

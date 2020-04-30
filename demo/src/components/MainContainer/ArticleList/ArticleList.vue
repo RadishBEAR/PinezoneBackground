@@ -65,7 +65,7 @@
                     <template slot-scope="scope">
                         <el-button
                                 size="mini"
-                                @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+                                @click="handleRead(scope.$index, scope.row)">查看</el-button>
                         <el-button
                                 size="mini"
                                 @click="handleDelete(scope.$index, scope.row)">删除</el-button>
@@ -76,21 +76,33 @@
                         width="50">
                 </el-table-column>
             </el-table>
+            <div style="width: 100%;height: 50px"></div>
+            <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    @current-change="handleCurrentChange"
+                    :total="this.totalPage">
+            </el-pagination>
         </div>
     </div>
 
 </template>
 
 <script>
+    import Vue from 'vue'
+    import { EventBus } from '../../../tools/EventBus'
     export default {
         name: "ArticleList",
         data(){
             return{
+                totalPage:70,
                 activeName:'diningRoom',
                 tableData:[],
-                diningRoom: [{
+                diningRoom: [
+                    {
                     title:'是什么让芝士乌龙成为最好喝的奶茶',
                     author:'爱吃萝卜的熊',
+                    IDOfAuthor:'1773',
                     ID:'17328',
                     releaseTime:'2020-4-25',
                     likenum:'57',
@@ -100,6 +112,7 @@
                 },{
                     title:'当我们谈论烧仙草时，我们谈论什么',
                     author:'提拉米猪',
+                    IDOfAuthor:'1773',
                     ID:'17328',
                     releaseTime:'2020-4-25',
                     likenum:'157',
@@ -109,6 +122,7 @@
                 },{
                     title:'多年以后，奥雷里亚诺上校会想起舍友带他去吃片皮鸭的那个下午',
                     author:'爱吃萝卜的熊',
+                    IDOfAuthor:'1773',
                     ID:'17328',
                     releaseTime:'2020-4-25',
                     likenum:'57',
@@ -118,6 +132,7 @@
                 },{
                     title:'我曾悲伤地爱过杨国福麻辣烫',
                     author:'爱吃萝卜的熊',
+                    IDOfAuthor:'1773',
                     ID:'17328',
                     releaseTime:'2020-4-25',
                     likenum:'57',
@@ -125,9 +140,11 @@
                     comments:'21',
                     reportNumber:'3'
                 }],
-                shopping: [{
+                shopping: [
+                    {
                     title:'永嘉书摊',
                     author:'爱吃萝卜的熊',
+                    IDOfAuthor:'1773',
                     ID:'6547328',
                     releaseTime:'2020-4-25',
                     likenum:'27',
@@ -137,6 +154,7 @@
                 },{
                     title:'西西弗书店',
                     author:'提拉米猪',
+                    IDOfAuthor:'1773',
                     ID:'654658',
                     releaseTime:'2020-3-25',
                     likenum:'97',
@@ -146,6 +164,7 @@
                 },{
                     title:'钓娃娃屋',
                     author:'大白鹅',
+                    IDOfAuthor:'1773',
                     ID:'327328',
                     releaseTime:'2020-4-25',
                     likenum:'97',
@@ -155,6 +174,7 @@
                 },{
                     title:'程序员快乐屋',
                     author:'爱吃萝卜的熊',
+                    IDOfAuthor:'1773',
                     ID:'65417328',
                     releaseTime:'2020-4-25',
                     likenum:'31',
@@ -178,6 +198,56 @@
                         this.tableData=this.shopping;
                         break;
                 }
+            },
+            handleDelete(index, row) {
+                console.log(index, row);
+                this.$confirm('此操作将删除该文章, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$confirm('不当操作将严重影响用户体验，请您再次确认是否删除', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        this.$prompt('请输入删除原因', '提示', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消'
+                        }).then(({ value }) => {
+                            this.$message({
+                                type: 'success',
+                                message: '已删除文章'
+                            });
+                            // 这里加要做什么操作
+                            console.log(value);
+                        }).catch(() => {
+                            this.$message({
+                                type: 'info',
+                                message: '取消删除'
+                            });
+                        });
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '取消删除'
+                        });
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '取消删除'
+                    });
+                });
+            },
+            handleRead(index, row){
+                console.log(row.IDOfAuthor);
+                Vue.prototype.$ArticleID=row.ID;
+                Vue.prototype.$AuthorID=row.IDOfAuthor;
+                EventBus.$emit('ReadArticle',row.ID)
+            },
+            handleCurrentChange(val) {
+                console.log(`当前页: ${val}`);
             }
         }
     }

@@ -17,6 +17,7 @@
                         <div id="WebsitesTable">
                             <happy-scroll hide-horizontal color="rgba(0,0,0,0.5)" style="height: 100%;width: 100%">
                                 <el-table
+                                        @row-click="clickWebsite"
                                     :data="tableData"
                                     style="width: 100%">
                                 <el-table-column
@@ -233,6 +234,11 @@
                         note: '里面有组件详细用法，维护时参考'
                     }
                 ]
+            }
+        },
+        methods:{
+            clickWebsite:function (row) {
+                window.open( "http://" +row.url)
             }
         }
     }
