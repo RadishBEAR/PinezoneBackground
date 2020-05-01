@@ -275,7 +275,7 @@
                             {value: 135, name: '自习室'},
                             {value: 300, name: '探店'}
                         ],
-                        color: ['#00B2EE','#00F5FF','#EEEE00','#FF7F00','#FF83FA'],
+                        color: ['#37a2da','#71f6f9','#ffdb5c','#ff9f7f','#e062ae'],
                     }
                 ]
             },
