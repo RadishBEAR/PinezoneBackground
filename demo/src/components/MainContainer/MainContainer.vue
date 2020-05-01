@@ -11,6 +11,8 @@
     import ArticleList from '../../components/MainContainer/ArticleList/ArticleList'
     import Announcement from '../../components/MainContainer/Announcement/Announcement'
     import Article from '../../components/MainContainer/Article/Article'
+    import ArticalData from '../../components/MainContainer/ArticalData/ArticalData'
+    import UserData from '../../components/MainContainer/UserData/UserData'
     export default {
         name: "MainContainer",
         components:{
@@ -18,7 +20,9 @@
             UserList,
             ArticleList,
             Announcement,
-            Article
+            Article,
+            ArticalData,
+            UserData
         },
         data(){
             return{
@@ -40,6 +44,12 @@
                         break;
                     case '公告系统':
                         this.content='Announcement';
+                        break;
+                    case '文章数据':
+                        this.content='ArticalData';
+                        break;
+                    case '用户数据':
+                        this.content='UserData';
                         break;
                 }
             })
