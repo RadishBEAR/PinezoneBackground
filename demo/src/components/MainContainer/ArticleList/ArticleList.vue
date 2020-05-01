@@ -181,7 +181,163 @@
                     privateIntFcount:'10',
                     comments:'57',
                     reportNumber:'0'
-                }]
+                }],
+                studyArea:[
+                    {
+                        title:'ds505',
+                        author:'爱吃萝卜的熊',
+                        IDOfAuthor:'6543',
+                        ID:'3146328',
+                        releaseTime:'2020-5-1',
+                        likenum:'97',
+                        privateIntFcount:'57',
+                        comments:'37',
+                        reportNumber:'0'
+                    },{
+                        title:'程序员快乐屋',
+                        author:'伏特加熊',
+                        IDOfAuthor:'62773',
+                        ID:'95658',
+                        releaseTime:'2020-4-25',
+                        likenum:'67',
+                        privateIntFcount:'7',
+                        comments:'19',
+                        reportNumber:'1'
+                    },{
+                        title:'东三空教室攻略',
+                        author:'RadishBear',
+                        IDOfAuthor:'87321',
+                        ID:'91613',
+                        releaseTime:'2020-4-25',
+                        likenum:'531',
+                        privateIntFcount:'461',
+                        comments:'102',
+                        reportNumber:'7'
+                    },{
+                        title:'晨读指南',
+                        author:'笑歌',
+                        IDOfAuthor:'92321',
+                        ID:'351613',
+                        releaseTime:'2020-2-25',
+                        likenum:'31',
+                        privateIntFcount:'16',
+                        comments:'12',
+                        reportNumber:'0'
+                    },{
+                        title:'食堂自习攻略',
+                        author:'空空',
+                        IDOfAuthor:'23791',
+                        ID:'43113',
+                        releaseTime:'2020-2-25',
+                        likenum:'36',
+                        privateIntFcount:'26',
+                        comments:'17',
+                        reportNumber:'3'
+                    },{
+                        title:'中楼自习室攻略',
+                        author:'是狮子啊',
+                        IDOfAuthor:'66134',
+                        ID:'946328',
+                        releaseTime:'2020-2-25',
+                        likenum:'83',
+                        privateIntFcount:'53',
+                        comments:'13',
+                        reportNumber:'5'
+                    }],
+                play:[
+                    {
+                        title:'3号琴室',
+                        author:'提拉米猪',
+                        IDOfAuthor:'616543',
+                        ID:'986328',
+                        releaseTime:'2020-5-7',
+                        likenum:'87',
+                        privateIntFcount:'67',
+                        comments:'57',
+                        reportNumber:'0'
+                    },{
+                        title:'福大校内泥塑指南',
+                        author:'伏特加熊',
+                        IDOfAuthor:'132773',
+                        ID:'9558',
+                        releaseTime:'2020-4-25',
+                        likenum:'21',
+                        privateIntFcount:'7',
+                        comments:'2',
+                        reportNumber:'0'
+                    },{
+                        title:'地质公园小夜曲',
+                        author:'板栗',
+                        IDOfAuthor:'654321',
+                        ID:'99513',
+                        releaseTime:'2020-4-25',
+                        likenum:'31',
+                        privateIntFcount:'61',
+                        comments:'12',
+                        reportNumber:'7'
+                    },{
+                        title:'福大摄影攻略',
+                        author:'笑歌',
+                        IDOfAuthor:'73321',
+                        ID:'52613',
+                        releaseTime:'2020-2-25',
+                        likenum:'49',
+                        privateIntFcount:'36',
+                        comments:'22',
+                        reportNumber:'3'
+                    },{
+                        title:'福大猫窝分布',
+                        author:'是狮子啊',
+                        IDOfAuthor:'95634',
+                        ID:'721328',
+                        releaseTime:'2020-3-2',
+                        likenum:'72',
+                        privateIntFcount:'63',
+                        comments:'23',
+                        reportNumber:'5'
+                    }],
+                gym:[
+                    {
+                        title:'福大周边健身房评测',
+                        author:'阿福',
+                        IDOfAuthor:'6373',
+                        ID:'9861',
+                        releaseTime:'2020-4-13',
+                        likenum:'47',
+                        privateIntFcount:'27',
+                        comments:'31',
+                        reportNumber:'0'
+                    },{
+                        title:'福大环校跑攻略',
+                        author:'爱吃萝卜的熊',
+                        IDOfAuthor:'6513',
+                        ID:'373',
+                        releaseTime:'2020-4-25',
+                        likenum:'67',
+                        privateIntFcount:'23',
+                        comments:'10',
+                        reportNumber:'2'
+                    },{
+                        title:'夜跑十圈',
+                        author:'伏特加熊',
+                        IDOfAuthor:'32173',
+                        ID:'65123',
+                        releaseTime:'2020-4-25',
+                        likenum:'21',
+                        privateIntFcount:'7',
+                        comments:'3',
+                        reportNumber:'0'
+                    },{
+                        title:'福大网球场小略',
+                        author:'笑歌',
+                        IDOfAuthor:'3573',
+                        ID:'9537328',
+                        releaseTime:'2020-2-25',
+                        likenum:'34',
+                        privateIntFcount:'12',
+                        comments:'7',
+                        reportNumber:'0'
+                    }],
             }
         },
         mounted() {
@@ -196,6 +352,15 @@
                         break;
                     case 'shopping':
                         this.tableData=this.shopping;
+                        break;
+                    case 'studyArea':
+                        this.tableData=this.studyArea;
+                        break;
+                    case 'play':
+                        this.tableData=this.play;
+                        break;
+                    case 'gym':
+                        this.tableData=this.gym;
                         break;
                 }
             },
@@ -248,6 +413,10 @@
             },
             handleCurrentChange(val) {
                 console.log(`当前页: ${val}`);
+            },
+            getArticlesList(type,index){
+                // 获取文章列表方法，其中type是文章类型，index是当前索引
+                console.log(type,index);
             }
         }
     }

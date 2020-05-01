@@ -59,7 +59,7 @@
                         <template slot-scope="scope">
                             <el-button
                                     size="mini"
-                                    @click="handleWatch(scope.$index, scope.row)">查看</el-button>
+                                    @click="readArticle(scope.$index, scope.row)">查看</el-button>
                             <el-button
                                     size="mini"
                                     @click="sendMessage(scope.$index, scope.row)">通知</el-button>
@@ -138,6 +138,8 @@
 </template>
 
 <script>
+    import Vue from 'vue'
+    import { EventBus } from '../../../tools/EventBus'
     export default {
         name: "UserList",
         data(){
@@ -258,8 +260,16 @@
             handleCurrentChange(val) {
                 console.log(`当前页: ${val}`);
             },
-            handleWatch:function (index, row) {
-                console.log(index, row);
+            readArticle:function (index, row) {
+                console.log(row.userID);
+                Vue.prototype.$ArticleID=this.getLatestArticles(row.userID);
+                Vue.prototype.$AuthorID=row.userID;
+                EventBus.$emit('ReadArticle',row.ID)
+            },
+            getLatestArticles:function (id) {
+                // 获取用户最新的文章id，给文章详细页渲染用
+                console.log(id);
+                return 1732;
             },
             sendMessage:function () {
                 this.$prompt('请输入通知内容', '提示', {
