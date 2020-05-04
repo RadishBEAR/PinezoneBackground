@@ -13,7 +13,7 @@
                 </div>
                 <div style="height: 05px;width: 80%;float: top;text-align: left">
                     <p style="color: #717171;margin-top: 0px;margin-left: 5px">
-                        {{"将于"+this.releaseTime+"发布"}}
+                        {{"于"+this.releaseTime+"发布"}}
                     </p>
                 </div>
             </div>

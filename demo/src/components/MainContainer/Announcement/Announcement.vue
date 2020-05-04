@@ -181,7 +181,7 @@
         },
         mounted() {
             this.momentumAnnouncement=this.momentumAnnouncementSimulation;
-            this.announcementHistory=this.announcementHistorySimulation;
+            // this.announcementHistory=this.announcementHistorySimulation;
             this.getAnnouncement();
         },
         methods:{
@@ -227,15 +227,44 @@
                     });
                 }
             },
+            // eslint-disable-next-line no-unused-vars
+            resolvingDate:function(date){
+                // 格式化日期函数
+                let d = new Date(date);
+                let month = (d.getMonth() + 1) < 10 ? '0'+(d.getMonth() + 1) : (d.getMonth() + 1);
+                let day = d.getDate()<10 ? '0'+d.getDate() : d.getDate();
+                let hours = d.getHours()<10 ? '0'+d.getHours() : d.getHours();
+                let min = d.getMinutes()<10 ? '0'+d.getMinutes() : d.getMinutes();
+                let times=d.getFullYear() + '-' + month + '-' + day + ' ' + hours + ':' + min;
+                return times
+            },
             getAnnouncement:function () {
                 // 获取公告列表方法
                 // 加载的时候调用一次，修改/发布公告的时候调用一次
                 var that=this;
                 var URL=Vue.prototype.$APIurl+'/v1/notices';
-                console.log(URL)
+                // console.log(URL)
+                // eslint-disable-next-line no-unused-vars
+                var flagOfHistory=2;    // 历史公告标记位
+                // eslint-disable-next-line no-unused-vars
+                var flagOfWait=1;   // 待发公告标记位
+
                 axios.get(URL).then(function(res) {
                     that.res=res.data;  // 这就是api返回的结果了
                     console.log(res.data)
+                    for (var i in res.data){
+                        var itemOld=res.data[i];
+                        var itemNew={
+                            title:itemOld.title,
+                            message:itemOld.content,
+                            releaseTime:that.resolvingDate(itemOld.date),
+                            author:"大白鹅",   // 要改
+                            headPortrait:"http://111.230.173.4:8080/img/%E5%A4%A7%E7%99%BD%E9%B9%85.png"    // 要改
+                        }
+                        if(itemOld.state===flagOfHistory){
+                            that.announcementHistory.push(itemNew)
+                        }
+                    }
                 }).catch(function (error) {
                     console.log(error)
                     that.res=error;
