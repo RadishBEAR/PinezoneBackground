@@ -96,6 +96,8 @@
 
 <script>
     import AnnouncementCard from '../Announcement/AnnouncementCard'
+    import axios from 'axios'
+    import Vue from 'vue'
     export default {
         name: "Announcement",
         data(){
@@ -180,6 +182,7 @@
         mounted() {
             this.momentumAnnouncement=this.momentumAnnouncementSimulation;
             this.announcementHistory=this.announcementHistorySimulation;
+            this.getAnnouncement();
         },
         methods:{
             send:function () {
@@ -227,7 +230,16 @@
             getAnnouncement:function () {
                 // 获取公告列表方法
                 // 加载的时候调用一次，修改/发布公告的时候调用一次
-
+                var that=this;
+                var URL=Vue.prototype.$APIurl+'/v1/notices';
+                console.log(URL)
+                axios.get(URL).then(function(res) {
+                    that.res=res.data;  // 这就是api返回的结果了
+                    console.log(res.data)
+                }).catch(function (error) {
+                    console.log(error)
+                    that.res=error;
+                })
             }
         }
     }

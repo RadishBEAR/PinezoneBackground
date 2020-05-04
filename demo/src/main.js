@@ -18,3 +18,10 @@ Vue.config.productionTip = false
 new Vue({
   render: h => h(App),
 }).$mount('#app')
+
+// 以下部分为相关配置
+// 后端端口url
+Vue.prototype.$APIurl='http://111.230.173.4:8090';
+
+
+
