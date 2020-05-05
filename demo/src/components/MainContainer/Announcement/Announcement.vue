@@ -264,6 +264,9 @@
                         if(itemOld.state===flagOfHistory){
                             that.announcementHistory.push(itemNew)
                         }
+                        if(itemOld.stae===flagOfWait){
+                            that.momentumAnnouncement.push(itemNew)
+                        }
                     }
                 }).catch(function (error) {
                     console.log(error)
