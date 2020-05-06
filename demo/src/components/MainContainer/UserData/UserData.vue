@@ -37,7 +37,14 @@
                 <linegraph :id="'linegraph'" :data="option3" style="height:350px"></linegraph>
             </div>
             <div id="activeTimeData">
-//需补充              
+                <UserDataCard
+                    weeklyPageView="573" 
+                    monthlyPageView="2653"
+                    weeklyRegistNum="53"
+                    totalRegistNum="1583"
+                    weeklyActiveNum="87"
+                    monthlyActiveNum="98"
+                ></UserDataCard> 
             </div>
         </div>
         <div id="userLiveness">
@@ -56,6 +63,16 @@
                 font-weight: 600;">
                 活跃用户Top8
             </p>
+            <UserLivenessRankCard
+                activeUserTop1="苯甲醚"
+                activeUserTop2="爱吃萝卜的熊"
+                activeUserTop3="提拉米猪"
+                activeUserTop4="伏特加熊"
+                activeUserTop5="沐风"
+                activeUserTop6="笑歌"
+                activeUserTop7="方鸿渐"
+                activeUserTop8="大白鹅"
+            ></UserLivenessRankCard>
             
         </div>  
     </div>
@@ -63,7 +80,8 @@
  
 <script>
     import linegraph from '../UserData/linegraph.vue'
-    
+    import UserDataCard from '../UserData/UserDataCard.vue'
+    import UserLivenessRankCard from '../UserData/UserLivenessRankCard.vue'
     export default {
         name: "UserData",
         data(){
@@ -292,7 +310,8 @@
     }, 
     components:{
         linegraph,
-        
+        UserDataCard,
+        UserLivenessRankCard
     }
 }
 </script>

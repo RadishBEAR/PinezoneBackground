@@ -225,7 +225,7 @@
         mounted() {
             this.ArticleID=Vue.prototype.$ArticleID;
             this.AuthorID=Vue.prototype.$AuthorID;
-            this.getArticle(1732)
+            this.getArticle(this.ArticleID)
         },
         methods:{
             delete:function () {
