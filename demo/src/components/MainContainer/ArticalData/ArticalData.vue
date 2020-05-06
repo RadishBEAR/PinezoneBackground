@@ -35,7 +35,12 @@
                 高举报率文章
             </p>
             <ArticalDataCard
-                    articalName="震惊！福大食堂后厨竟有如此惊天大秘密！"
+                    articalName1="震惊！福大食堂后厨竟有如此惊天大秘密！"
+                    articalName2="是什么让芝士乌龙成为最好喝的奶茶"
+                    articalName3="当我们谈论烧仙草时，我们谈论什么"
+                    articalName4="多年以后，奥雷里亚诺上校会想起舍友带他去吃片皮鸭的那个下午"
+                    articalName5="我曾悲伤地爱过杨国福麻辣烫"
+                    articalName6="福大周边健身房评测"
             ></ArticalDataCard>
         </div>
     </div>
