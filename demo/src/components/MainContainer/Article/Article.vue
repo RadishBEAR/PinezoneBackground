@@ -145,6 +145,7 @@
     import Vue from 'vue'
     import BusinessCard from '../Article/BusinessCard'
     import CommentCard from '../Article/CommentCard'
+    import axios from 'axios'
     import { EventBus } from '../../../tools/EventBus'
     export default {
         name: "Article",
@@ -156,7 +157,7 @@
             return{
                 AuthorID:'',
                 sign:'小如一首歌,小如一个吻',
-                author:'提拉米猪',
+                author:'',
                 numberOfArticles:'57',
                 numberOfFans:'17',
                 numberOfReports:'2',
@@ -179,8 +180,8 @@
                     },
                 ],
                 articleData:{
-                    releaseTime:'2020-4-13 20:17',
-                    author:'提拉米猪',
+                    releaseTime:'',
+                    author:'',
                     AuthorID:'',
 
                     likenum:'51',
@@ -188,17 +189,10 @@
                     commentNumber:'23',
                     reportNumber:'1',
 
-                    title:"是什么让芝士乌龙成为最好喝的奶茶",
+                    title:"",
 
-                    img:[
-                        "http://111.230.173.4:8080/img/%E8%8A%9D%E5%A3%AB%E4%B9%8C%E9%BE%991.jpg",
-                        "http://111.230.173.4:8080/img/%E8%8A%9D%E5%A3%AB%E4%B9%8C%E9%BE%992.jpg",
-                        "http://111.230.173.4:8080/img/%E8%8A%9D%E5%A3%AB%E4%B9%8C%E9%BE%993.jpg"
-                    ],
-                    content:"    看完重庆森林后的一天零五个小时三十七分二十九秒，我点了一杯芝士乌龙，不过这次，我加了珍珠。\n" +
-                        "     芝士乌龙的醇香飞跃于整个人类的存在状态之上，杯下的世界更加趣味横生，也更加惊骇人心。" +
-                        "而奶盖，奶盖将芝士乌龙从湮没无名的芸芸大众之中提升起来。" +
-                        "它那醇厚的奶香与不加掩饰的酣畅淋漓，揭示了奶茶之下的种种侧面，并在有意无意中寻得具有强烈象征蕴涵的纷繁意象。",
+                    img:[],
+                    content:"",
                     comments:[
                         {
                             name:"大白鹅",
@@ -231,6 +225,7 @@
         mounted() {
             this.ArticleID=Vue.prototype.$ArticleID;
             this.AuthorID=Vue.prototype.$AuthorID;
+            this.getArticle(1732)
         },
         methods:{
             delete:function () {
@@ -294,6 +289,27 @@
             clickArticle:function (row) {
                 console.log(row.id);
                 EventBus.$emit('ReadArticle',row.id)
+            },
+            getArticle:function (id) {
+                // 获取公告列表方法
+                // 加载的时候调用一次，修改/发布公告的时候调用一次
+                var that=this;
+                var URL=Vue.prototype.$APIurl+'/article'+'?aid='+id;
+
+                axios.get(URL).then(function(res) {
+                    that.res=res.data;  // 这就是api返回的结果了
+                    console.log(res.data)
+                    that.articleData.content=res.data['content'];
+                    that.articleData.title=res.data['title'];
+                    var imgList=res.data['aimg'].split(" ");    // 此处是图片列表解析策略
+                    that.articleData.img=imgList;
+                    that.author=res.data['username']
+                    that.articleData.author=res.data['username']
+                    that.articleData.releaseTime=res.data['datetime']
+                }).catch(function (error) {
+                    console.log(error)
+                    that.res=error;
+                })
             }
         }
     }
