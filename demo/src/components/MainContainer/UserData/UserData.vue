@@ -12,7 +12,7 @@
                 font-weight: 600;">
                 活跃用户占比
             </p>
-            <div id="pieGraph">    
+            <div id="pieGraph">
                 <linegraph :id="'piegraph'" :data="option" style="height:350px"></linegraph>
             </div>
         </div>
@@ -28,7 +28,7 @@
                 font-weight: 600;">
                 用户性别比例
             </p>
-            <div id="pieGraph2">    
+            <div id="pieGraph2">
                 <linegraph :id="'piegraph2'" :data="option2" style="height:350px"></linegraph>
             </div>
         </div>
@@ -38,19 +38,19 @@
             </div>
             <div id="activeTimeData">
                 <UserDataCard
-                    weeklyPageView="573" 
+                    weeklyPageView="573"
                     monthlyPageView="2653"
                     weeklyRegistNum="53"
                     totalRegistNum="1583"
                     weeklyActiveNum="87"
                     monthlyActiveNum="98"
-                ></UserDataCard> 
+                ></UserDataCard>
             </div>
         </div>
         <div id="userLiveness">
             <linegraph :id="'linegraph1'" :data="option4" style="height:350px;"></linegraph>
         </div>
-        
+
         <div id="userLivenessRank">
             <p
                 style="text-align: left;
@@ -64,20 +64,13 @@
                 活跃用户Top8
             </p>
             <UserLivenessRankCard
-                activeUserTop1="苯甲醚"
-                activeUserTop2="爱吃萝卜的熊"
-                activeUserTop3="提拉米猪"
-                activeUserTop4="伏特加熊"
-                activeUserTop5="沐风"
-                activeUserTop6="笑歌"
-                activeUserTop7="方鸿渐"
-                activeUserTop8="大白鹅"
+                :activeUserTop="this.activeUserTop"
             ></UserLivenessRankCard>
-            
-        </div>  
+
+        </div>
     </div>
 </template>
- 
+
 <script>
     import linegraph from '../UserData/linegraph.vue'
     import UserDataCard from '../UserData/UserDataCard.vue'
@@ -197,7 +190,7 @@
                                 color: '#5CACEE'
                             }
                         }
-                       
+
                     }]
                 },
                 option4:{
@@ -254,7 +247,7 @@
                         data: ['5.1', '5.2', '5.3', '5.4', '5.5', '5.6', '5.7','5.8','5.9','5.10','5.11','5.12','5.13','5.14','5.15'],
                         splitLine:{
                             show:true
-                        
+
                         }
                     },
                     yAxis: {
@@ -262,7 +255,7 @@
                         name: '数量',
                         nameTextStyle: {
                             color: '#D9D9D9',
-                            fontSize: 17 
+                            fontSize: 17
                         },
                         splitLine:{
                             show:true
@@ -281,7 +274,7 @@
                             }
                         }
                     },
-                    
+
                     series: {
                         data: [18, 20, 25,23,30,35,45,20,18,26,40,45,38,35,30],
                         type: 'line',
@@ -304,10 +297,18 @@
                         }
                     }
                 },
-          
-            
+                activeUserTop:[
+                    "苯甲醚",
+                    "爱吃萝卜的熊",
+                    "提拉米猪",
+                    "伏特加熊",
+                    "沐风",
+                    "笑歌",
+                    "是狮子啊",
+                    "大白鹅",
+                ]
         }
-    }, 
+    },
     components:{
         linegraph,
         UserDataCard,
@@ -315,7 +316,7 @@
     }
 }
 </script>
- 
+
 <style scoped>
 #userData{
     width: 100%;
@@ -344,7 +345,7 @@
     margin-top: 1%;
     float: left;
     box-shadow: 1px 1px 3px #888888;
-} 
+}
     #activeTimeGraph{
         width:60%;
         height:100%;
@@ -355,7 +356,7 @@
         height:100%;
         float:left;
     }
-       
+
 #userLiveness{
     width: 75%;
     height: 45%;

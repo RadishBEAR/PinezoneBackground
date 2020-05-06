@@ -1,6 +1,6 @@
 <template>
     <div id="userDataCard">
-        
+
             <div style="width: 100%;height: 30px;">
                 <p style="color: #5d4037;margin-top: 10px;margin-left: 5px;font-size: 25px">
                     {{"周访问量："+this.weeklyPageView}}
@@ -22,7 +22,7 @@
                 </p>
             </div>
             <div style="width: 100%;height: 30px;">
-                <p style="color: #5d4037;margin-top: 10px;margin-left: 5px;font-size: 25px">        
+                <p style="color: #5d4037;margin-top: 10px;margin-left: 5px;font-size: 25px">
                     {{"周活跃用户数: "+this.weeklyActiveNum}}
                 </p>
             </div>
@@ -31,7 +31,7 @@
                     {{"月活跃用户数: "+this.monthlyActiveNum}}
                 </p>
             </div>
-       
+
     </div>
 </template>
 
@@ -51,8 +51,10 @@
 
 <style scoped>
     #userDataCard{
-        width: 100%;
-        margin-left: 0px;
+        width: 80%;
+        margin-left: 50px;
         margin-top: 80px;
+        text-align: left;
+        font-weight: 500;
     }
 </style>

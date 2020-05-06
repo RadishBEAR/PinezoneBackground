@@ -1,10 +1,20 @@
 <template>
-    <div id="articaDataCard">
-        <div style="width: 100%;height: 30px;">
-            <p style="color: #5d4037;margin-top: 5px;margin-left: 5px;">
-                {{"文章名："+this.articalName}}
-            </p>
-        </div>
+    <div id="articleDataCard">
+        <happy-scroll hide-vertical hide-horizontal color="rgba(0,0,0,0.5)" style="height: 90%;width: 100%">
+            <div style="width: 90%;"
+                 v-for="(item,index) in this.articalName"
+                 :key="index">
+                <p style="color: #5d4037;
+                margin-top: 25px;
+                margin-left: 5px;
+                font-weight: 600;
+                font-size: 18px;
+                text-align: left">
+                    {{item}}
+                </p>
+
+            </div>
+        </happy-scroll>
     </div>
 </template>
 
@@ -12,15 +22,21 @@
     export default {
         name: "ArticalDataCard",
         props:{
-            articalName: String
+            articalName: Array,
         }
     }
 </script>>
 
 <style scoped>
-    #articalDataCard{
-        width: 70%;
-        margin-left: 50px;
-        margin-top: 30px;
+    #articleDataCard{
+        width: 80%;
+        height: 80%;
+        margin-left: 10%;
+    }
+    #articleDataCard>>>.happy-scroll-content{
+        display:block!important;
+    }
+    #articleDataCard>>>.happy-scroll-container .happy-scroll-content{
+        display:block!important;
     }
 </style>

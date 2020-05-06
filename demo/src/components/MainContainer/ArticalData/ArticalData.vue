@@ -35,7 +35,7 @@
                 高举报率文章
             </p>
             <ArticalDataCard
-                    articalName="震惊！福大食堂后厨竟有如此惊天大秘密！"
+                    :articalName="this.articlesNames"
             ></ArticalDataCard>
         </div>
     </div>
@@ -279,6 +279,14 @@
                     }
                 ]
             },
+                articlesNames:[
+                    "震惊！福大食堂后厨竟有如此惊天大秘密！",
+                    "生泪控诉学生街XXX店之卑劣营销",
+                    "童叟无欺！不花钱还赚钱的夹娃娃店！",
+                    "人神共愤！如此美味之片皮鸭竟然只卖2块钱？",
+                    "喝了这杯奶茶，我哭了3天",
+                    "我一开始也不信XX的奶茶能减肥"
+                ]
         }
     },
     components:{
