@@ -101,8 +101,8 @@
                 diningRoom: [
                     {
                     title:'是什么让芝士乌龙成为最好喝的奶茶',
-                    author:'爱吃萝卜的熊',
-                    IDOfAuthor:'1773',
+                    author:'提拉米猪',
+                    IDOfAuthor:'2231',
                     ID:'1732',
                     releaseTime:'2020-4-25',
                     likenum:'57',

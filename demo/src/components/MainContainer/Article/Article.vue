@@ -161,11 +161,11 @@
                 numberOfArticles:'57',
                 numberOfFans:'17',
                 numberOfReports:'2',
-                headPortrait:'http://111.230.173.4:8080/img/%E9%BE%99%E7%8C%AB.png',
+                headPortrait:'',
                 tableData:[
                     {
-                    title:'程序员快乐屋',
-                    time:'2020-4-23',
+                        title:'程序员快乐屋',
+                        time:'2020-4-23',
                         id:'1713',
                     },
                     {
@@ -193,39 +193,19 @@
 
                     img:[],
                     content:"",
-                    comments:[
-                        {
-                            name:"大白鹅",
-                            releaseTime:'2020-4-13 20:37',
-                            headPortrait:'http://111.230.173.4:8080/img/%E5%92%95%E5%92%95.png',
-                            comment:"芝士乌龙+芋圆三分甜超级棒"
-                        },
-                        {
-                            name:"阿龙",
-                            releaseTime:'2020-4-13 20:39',
-                            headPortrait:'http://111.230.173.4:8080/img/%E9%98%BF%E9%BE%99.png',
-                            comment:"每周必点"
-                        },
-                        {
-                            name:"阿哞",
-                            releaseTime:'2020-4-13 21:39',
-                            headPortrait:'http://111.230.173.4:8080/img/%E9%98%BF%E5%93%9E.png',
-                            comment:"我真的超爱古茗啊啊啊啊啊啊啊"
-                        },
-                        {
-                            name:"是狮子啊",
-                                releaseTime:'2020-4-13 21:57',
-                            headPortrait:'http://111.230.173.4:8080/img/%E7%8B%AE%E5%AD%90%E5%95%8A.png',
-                            comment:"最喜欢芝士乌龙和直火乌龙"
-                        },
-                    ]
+                    comments:[]
                 }
             }
         },
         mounted() {
             this.ArticleID=Vue.prototype.$ArticleID;
             this.AuthorID=Vue.prototype.$AuthorID;
-            this.getArticle(this.ArticleID)
+            this.getArticle(this.ArticleID);
+            var that=this;
+            this.getHeadPortrait(this.AuthorID).then(function (result) {
+                that.headPortrait=result;
+            });
+            this.getComments(this.ArticleID);
         },
         methods:{
             delete:function () {
@@ -294,11 +274,11 @@
                 // 获取公告列表方法
                 // 加载的时候调用一次，修改/发布公告的时候调用一次
                 var that=this;
-                var URL=Vue.prototype.$APIurl+'/article'+'?aid='+id;
+                var URL=Vue.prototype.$APIurl+'/v1/article'+'?aid='+id+'&uid=2217';
 
                 axios.get(URL).then(function(res) {
                     that.res=res.data;  // 这就是api返回的结果了
-                    console.log(res.data)
+                    // console.log(res.data)
                     that.articleData.content=res.data['content'];
                     that.articleData.title=res.data['title'];
                     var imgList=res.data['aimg'].split(" ");    // 此处是图片列表解析策略
@@ -306,6 +286,93 @@
                     that.author=res.data['username']
                     that.articleData.author=res.data['username']
                     that.articleData.releaseTime=res.data['datetime']
+                }).catch(function (error) {
+                    console.log(error)
+                    that.res=error;
+                })
+            },
+            getHeadPortrait: async function (id) {
+                // 根据用户id获取头像的方法
+                var URL = Vue.prototype.$APIurl + '/v1/user/picture' + '?uid=' + id;
+                // console.log(URL)
+                var path;
+                await axios.get(URL).then(function (res) {
+                    // console.log(res.data['path'])
+                    path=res.data['path'];
+                }).catch(function (error) {
+                    console.log(error)
+                })
+                return path;
+            },
+            getHeadPortraitInComment: async function (id,index) {
+                // 根据用户id获取头像的方法
+                var URL = Vue.prototype.$APIurl + '/v1/user/picture' + '?uid=' + id;
+                // console.log(URL)
+                var path;
+                await axios.get(URL).then(function (res) {
+                    // console.log(res.data['path'])
+                    path=res.data['path'];
+                }).catch(function (error) {
+                    console.log(error)
+                })
+                return {
+                        path:path,
+                        index:index
+                };
+            },
+            getUserName:async function (id){
+                // 根据用户id获取用户名之方法
+                var URL = Vue.prototype.$APIurl + '/v1/user' + '?uid=' + id;
+                // console.log(URL)
+                var name;
+                await axios.get(URL).then(function (res) {
+                    // console.log(res.data['path'])
+                    name=res.data['name'];
+                }).catch(function (error) {
+                    console.log(error)
+                })
+                return name;
+            },
+            getUserNameInComment: async function (id,index){
+                // 根据用户id获取用户名之方法
+                var URL = Vue.prototype.$APIurl + '/v1/user' + '?id=' + id;
+                // console.log(URL)
+                var name;
+                await axios.get(URL).then(function (res) {
+                    // console.log(res.data['path'])
+                    name=res.data['name'];
+                }).catch(function (error) {
+                    console.log(error)
+                });
+                return {
+                    name:name,
+                    index:index
+                };
+            },
+            getComments:async function (id) {
+                // 根据文章id获取评论列表之方法
+                var that=this;
+                var URL=Vue.prototype.$APIurl+'/v1/comments'+'?aid='+id;
+                // console.log(URL)
+                axios.get(URL).then(function(res) {
+                    that.res=res.data;  // 这就是api返回的结果了
+                    // console.log(res.data)
+                    for(var index in res.data){
+                        var item=res.data[index];
+                        var comment={
+                            name:"",
+                            releaseTime:item['date'],
+                            headPortrait:"",
+                            comment:item['content']
+                        };
+                        that.articleData.comments.push(comment);
+                        that.getHeadPortraitInComment(item['uid'],index).then((result)=>{
+                            that.articleData.comments[result['index']]['headPortrait']=result['path'];
+                        })
+                        that.getUserNameInComment(item['uid'],index).then((result)=>{
+                            that.articleData.comments[result['index']]['name']=result['name'];
+                        })
+                    }
                 }).catch(function (error) {
                     console.log(error)
                     that.res=error;
