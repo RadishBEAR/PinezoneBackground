@@ -98,7 +98,7 @@
                         <AppCard
                                 style="margin-left: 130px"
                                 appType="java"
-                                appName="Java 13"
+                                appName="Java 1.8.0"
                                 appAddress="/usr/local/java"
                         ></AppCard>
                         <AppCard

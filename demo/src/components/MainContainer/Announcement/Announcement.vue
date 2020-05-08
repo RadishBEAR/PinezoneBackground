@@ -180,8 +180,8 @@
             AnnouncementCard
         },
         mounted() {
-            this.momentumAnnouncement=this.momentumAnnouncementSimulation;
-            this.announcementHistory=this.announcementHistorySimulation;    // 接口来了就把这两段关了
+            // this.momentumAnnouncement=this.momentumAnnouncementSimulation;
+            // this.announcementHistory=this.announcementHistorySimulation;    // 接口来了就把这两段关了
             this.getAnnouncement();
         },
         methods:{
@@ -252,26 +252,66 @@
                 axios.get(URL).then(function(res) {
                     that.res=res.data;  // 这就是api返回的结果了
                     console.log(res.data)
+                    var iOfH=0;
+                    var iOfM=0;
                     for (var i in res.data){
                         var itemOld=res.data[i];
                         var itemNew={
                             title:itemOld.title,
                             message:itemOld.content,
                             releaseTime:that.resolvingDate(itemOld.date),
-                            author:"大白鹅",   // 要改
-                            headPortrait:"http://111.230.173.4:8080/img/%E5%A4%A7%E7%99%BD%E9%B9%85.png"    // 要改
-                        }
+                            author:"",   // 要改
+                            headPortrait:""    // 要改
+                        };
                         if(itemOld.state===flagOfHistory){
-                            that.announcementHistory.push(itemNew)
+                            that.announcementHistory.push(itemNew);
+                            that.getNameAndHead(itemOld['uid'],iOfH).then((result)=>{
+                                // console.log(result);
+                                that.announcementHistory[result['index']]['headPortrait']=result['head'];
+                                that.announcementHistory[result['index']]['author']=result['name']
+                            })
+                            iOfH=iOfH+1;
                         }
-                        if(itemOld.stae===flagOfWait){
-                            that.momentumAnnouncement.push(itemNew)
+                        if(itemOld.state===flagOfWait){
+                            that.momentumAnnouncement.push(itemNew);
+                            that.getNameAndHead(itemOld['uid'],iOfM).then((result)=>{
+                                console.log(result);
+                                that.momentumAnnouncement[result['index']]['headPortrait']=result['head'];
+                                that.momentumAnnouncement[result['index']]['author']=result['name']
+                            })
+                            iOfM++;
                         }
                     }
                 }).catch(function (error) {
                     console.log(error)
                     that.res=error;
                 })
+            },
+            getNameAndHead:async function (id,index) {
+                // 根据用户id获取头像和用户名的方法
+                var URL = Vue.prototype.$APIurl + '/v1/user/picture' + '?uid=' + id;
+                // console.log(URL)
+                var path;
+                await axios.get(URL).then(function (res) {
+                    // console.log(res.data['path'])
+                    path=res.data['path'];
+                }).catch(function (error) {
+                    console.log(error)
+                });
+                URL = Vue.prototype.$APIurl + '/v1/user' + '?id=' + id;
+                // console.log(URL)
+                var name;
+                await axios.get(URL).then(function (res) {
+                    // console.log(res.data['path'])
+                    name=res.data['name'];
+                }).catch(function (error) {
+                    console.log(error)
+                });
+                return {
+                    head:path,
+                    name:name,
+                    index:index
+                };
             }
         }
     }
