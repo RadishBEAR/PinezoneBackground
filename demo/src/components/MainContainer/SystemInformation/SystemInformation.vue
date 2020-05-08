@@ -157,35 +157,41 @@
             <div style="width: 80%;height: 70%;margin-top: 40px;margin-left: 50px;">
                 <div style="width: 100%;height: 30px;text-align: left">
                     <span style="color: #8f99a5">Android版本：</span>
-                    <span style="font-weight: 600">Alpha 0.7</span>
+                    <span >Alpha 0.7</span>
                 </div>
                 <div style="width: 100%;height: 30px;text-align: left">
                     <span style="color: #8f99a5">IOS版本：</span>
-                    <span style="font-weight: 600">Alpha 0.7</span>
+                    <span >Alpha 0.7</span>
                 </div>
                 <div style="width: 100%;height: 30px;text-align: left">
                     <span style="color: #8f99a5">MySQL版本号：</span>
-                    <span style="font-weight: 600">5.6</span>
+                    <span >5.6</span>
                 </div>
                 <div style="width: 100%;height: 30px;text-align: left">
                     <span style="color: #8f99a5">Tomcat版本号：</span>
-                    <span style="font-weight: 600">9</span>
+                    <span >9</span>
                 </div>
                 <div style="width: 100%;height: 30px;text-align: left">
                     <span style="color: #8f99a5">最大并发量：</span>
-                    <span style="font-weight: 600">150</span>
+                    <span >150</span>
                 </div>
                 <div style="width: 100%;height: 30px;text-align: left">
                     <span style="color: #8f99a5">后台系统：</span>
-                    <span style="font-weight: 600">Linux-CentOS7</span>
+                    <span >Linux-CentOS7</span>
                 </div>
 <!--                <div style="width: 100%;text-align: left;margin-top: 30px">-->
 <!--                    <span style="color: #8f99a5">相关：</span>-->
 <!--                    <span>云数据库与服务器分离。云服务器是学生套餐，有流量限制，要时刻关注流量状态。域名后缀取space，域名商为阿里，按年续费。-->
 <!--                        后端技术栈为Spring+Hibernate，前后端通过ajax连接，json传输</span>-->
 <!--                </div>-->
-
+                <div style="text-align: left">
+                    <p>松果生活后台系统主要服务于开发者组成员与管理员</p>
+                    <p>松果生活后台系统由Springboot框架构建，部署在腾讯云Centos服务器上（不在外部Tomcat环境下）</p>
+                    <p>数据库与后端服务分开部署，位于腾讯云独立环境下。数据库版本为MySQL5.6，自带图形化管理页面</p>
+                    <p>系统内图片部署在后端服务器上，远程地址为http://111.230.173.4:8080/img</p>
+                </div>
             </div>
+
         </div>
 
     </div>

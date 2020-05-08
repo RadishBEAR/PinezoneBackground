@@ -17,7 +17,7 @@
                                     <el-carousel-item
                                             v-for="(item,index) in this.articleData.img"
                                             :key="index">
-                                        <img :src="item" style="height: 100%">
+                                        <img :src="item['path']" style="height: 100%">
                                     </el-carousel-item>
                                 </el-carousel>
                             </div>
@@ -186,7 +186,7 @@
 
                     likenum:'51',
                     collectNumber:'17',
-                    commentNumber:'23',
+                    commentNumber:0,
                     reportNumber:'1',
 
                     title:"",
@@ -271,8 +271,6 @@
                 EventBus.$emit('ReadArticle',row.id)
             },
             getArticle:function (id) {
-                // 获取公告列表方法
-                // 加载的时候调用一次，修改/发布公告的时候调用一次
                 var that=this;
                 var URL=Vue.prototype.$APIurl+'/v1/article'+'?aid='+id+'&uid=2217';
 
@@ -281,7 +279,7 @@
                     // console.log(res.data)
                     that.articleData.content=res.data['content'];
                     that.articleData.title=res.data['title'];
-                    var imgList=res.data['aimg'].split(" ");    // 此处是图片列表解析策略
+                    var imgList=res.data['aimg'];    // 此处是图片列表解析策略
                     that.articleData.img=imgList;
                     that.author=res.data['username']
                     that.articleData.author=res.data['username']
@@ -359,6 +357,7 @@
                     // console.log(res.data)
                     for(var index in res.data){
                         var item=res.data[index];
+                        that.articleData.commentNumber++;
                         var comment={
                             name:"",
                             releaseTime:item['date'],

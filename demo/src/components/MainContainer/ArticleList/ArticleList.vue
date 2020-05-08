@@ -112,8 +112,8 @@
                 },{
                     title:'当我们谈论烧仙草时，我们谈论什么',
                     author:'提拉米猪',
-                    IDOfAuthor:'1773',
-                    ID:'1732',
+                    IDOfAuthor:'2231',
+                    ID:'1736',
                     releaseTime:'2020-4-25',
                     likenum:'157',
                     privateIntFcount:'17',
@@ -132,8 +132,8 @@
                 },{
                     title:'我曾悲伤地爱过杨国福麻辣烫',
                     author:'爱吃萝卜的熊',
-                    IDOfAuthor:'1773',
-                    ID:'1732',
+                    IDOfAuthor:'3568',
+                    ID:'1737',
                     releaseTime:'2020-4-25',
                     likenum:'57',
                     privateIntFcount:'17',

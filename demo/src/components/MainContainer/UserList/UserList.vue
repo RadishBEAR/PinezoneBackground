@@ -263,13 +263,14 @@
             readArticle:function (index, row) {
                 console.log(row.userID);
                 Vue.prototype.$ArticleID=this.getLatestArticles(row.userID);
-                Vue.prototype.$AuthorID=row.userID;
+                // Vue.prototype.$AuthorID=row.userID;
+                Vue.prototype.$AuthorID=2231;
                 EventBus.$emit('ReadArticle',row.ID)
             },
             getLatestArticles:function (id) {
                 // 获取用户最新的文章id，给文章详细页渲染用
                 console.log(id);
-                return 1732;
+                return '1732';
             },
             sendMessage:function () {
                 this.$prompt('请输入通知内容', '提示', {
