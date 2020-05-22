@@ -180,8 +180,6 @@
             AnnouncementCard
         },
         mounted() {
-            // this.momentumAnnouncement=this.momentumAnnouncementSimulation;
-            // this.announcementHistory=this.announcementHistorySimulation;    // 接口来了就把这两段关了
             this.getAnnouncement();
         },
         methods:{

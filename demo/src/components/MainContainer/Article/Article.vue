@@ -184,7 +184,7 @@
                     author:'',
                     AuthorID:'',
 
-                    likenum:'51',
+                    likenum:'',
                     collectNumber:'17',
                     commentNumber:0,
                     reportNumber:'1',
@@ -278,6 +278,7 @@
                     that.res=res.data;  // 这就是api返回的结果了
                     // console.log(res.data)
                     that.articleData.content=res.data['content'];
+                    that.articleData.likenum=res.data['likenum'];
                     that.articleData.title=res.data['title'];
                     var imgList=res.data['aimg'];    // 此处是图片列表解析策略
                     that.articleData.img=imgList;

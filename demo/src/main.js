@@ -15,9 +15,17 @@ import 'vue-happy-scroll/docs/happy-scroll.css'
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 
+import routers from '../src/router/router.js'
+import Router from "vue-router"; // 路由
+
+const router=new Router({
+  routes:routers
+});
+
 new Vue({
+  router:router,
   render: h => h(App),
-}).$mount('#app')
+}).$mount('#app');
 
 // 以下部分为相关配置
 // 后端端口url

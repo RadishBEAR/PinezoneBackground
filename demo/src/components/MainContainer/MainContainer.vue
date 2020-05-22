@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import { EventBus } from '../../tools/EventBus'
+
     import SystemInformation from '../../components/MainContainer/SystemInformation/SystemInformation'
     import UserList from '../../components/MainContainer/UserList/UserList'
     import ArticleList from '../../components/MainContainer/ArticleList/ArticleList'
@@ -30,33 +30,7 @@
             }
         },
         mounted() {
-            EventBus.$on('selectFunctionModule',(msg)=>{
-                console.log("点击"+msg+"模块");
-                switch (msg) {
-                    case '用户列表':
-                        this.content='UserList';
-                        break;
-                    case '系统信息':
-                        this.content='SystemInformation';
-                        break;
-                    case '文章列表':
-                        this.content='ArticleList';
-                        break;
-                    case '公告系统':
-                        this.content='Announcement';
-                        break;
-                    case '文章数据':
-                        this.content='ArticalData';
-                        break;
-                    case '用户数据':
-                        this.content='UserData';
-                        break;
-                }
-            })
-            EventBus.$on('ReadArticle',(msg)=>{
-                this.content='Article';
-                console.log(msg);
-            })
+
         }
     }
 </script>

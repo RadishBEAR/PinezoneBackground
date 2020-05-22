@@ -46,7 +46,7 @@
                 round
                 @click="login"
                 style="border: 1px solid #88736c!important;color: #88736c!important;float: left">
-          圆角按钮
+          登录
         </el-button>
         <p style="float: right;margin-top: 6px;color: #88736c">申请管理员账号</p>
       </div>
@@ -70,7 +70,7 @@ export default {
   methods:{
     login:function () {
       if((this.adminName==='admin')&&(this.password==='123456')){
-        window.location.href="http://radishbear.top/PinezonBackground/";
+        window.location.href="http://radishbear.top/PinezoneBackground/";
       }
     }
   }

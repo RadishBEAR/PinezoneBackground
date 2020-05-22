@@ -356,10 +356,12 @@
         methods:{
             handleClick() {
                 console.log(this.activeName);
+                this.totalPage=10;
                 switch (this.activeName) {
                     case 'diningRoom':
                         this.tableData=this.diningRoom;
                         this.cid=1;
+                        this.totalPage=40;
                         break;
                     case 'shopping':
                         this.tableData=this.shopping;
@@ -447,7 +449,7 @@
                                 author:item.username,
                                 IDOfAuthor:item.uid,
                                 ID:item.aid,
-                                releaseTime:'2020-4-25',
+                                releaseTime:item.date,
                                 likenum:item.likenum,
                                 privateIntFcount:parseInt(Math.random() * 10),
                                 comments:parseInt(Math.random() * 10),
