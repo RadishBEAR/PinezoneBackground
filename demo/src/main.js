@@ -29,7 +29,9 @@ new Vue({
 
 // 以下部分为相关配置
 // 后端端口url
-Vue.prototype.$APIurl='http://111.230.173.4:8081';
+
+import global from './tools/global'   //注意文件路径，实际路径以项目目录结构为准
+global.setAPIurl('http://111.230.173.4:8081');
 
 
 

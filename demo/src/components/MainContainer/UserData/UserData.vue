@@ -13,7 +13,7 @@
                 活跃用户占比
             </p>
             <div id="pieGraph">
-                <linegraph :id="'piegraph'" :data="option" style="height:350px"></linegraph>
+                <linegraph id="piegraph" :data="option" style="height:350px"></linegraph>
             </div>
         </div>
         <div id="userSexRatio">
@@ -29,7 +29,7 @@
                 用户性别比例
             </p>
             <div id="pieGraph2">
-                <linegraph :id="'piegraph2'" :data="option2" style="height:350px"></linegraph>
+                <linegraph id="piegraph2" :data="option2" style="height:350px"></linegraph>
             </div>
         </div>
         <div id="userActiveTime">
@@ -75,6 +75,8 @@
     import linegraph from '../UserData/linegraph.vue'
     import UserDataCard from '../UserData/UserDataCard.vue'
     import UserLivenessRankCard from '../UserData/UserLivenessRankCard.vue'
+    import global from '../../../tools/global'
+    import axios from 'axios'
     export default {
         name: "UserData",
         data(){
@@ -137,10 +139,7 @@
                             labelLine: {
                                 show: false
                             },
-                            data: [
-                                {value: 500, name: '男性'},
-                                {value: 310, name: '女性'}
-                            ],
+                            data: [],
                             color: ['#00B2EE','#FF83FA'],
                         }
                     ]
@@ -306,15 +305,59 @@
                     "笑歌",
                     "是狮子啊",
                     "大白鹅",
-                ]
+                ],
+                numberOfAllUsers:0
         }
     },
-    components:{
-        linegraph,
-        UserDataCard,
-        UserLivenessRankCard
+        components:{
+            linegraph,
+            UserDataCard,
+            UserLivenessRankCard
+        },
+        methods:{
+            getSexRatio:function () {
+                var URL=global.getAPIurl()+'/v1/statistics/articles/sex-radio';
+                // eslint-disable-next-line no-unused-vars
+                var that=this;
+                console.log(URL);
+                axios.get(URL).then(function (res) {
+                    console.log(that.option2.series[0].data);
+                    that.numberOfAllUsers=res.data[0]['num']+res.data[1]['num'];
+                    var item=[
+                        {value:res.data[1]['num'],name:res.data[1]['sex']},
+                        {value:res.data[0]['num'],name:res.data[0]['sex']}
+                    ];
+                    that.option2.series[0].data=item;
+                    that.chart = that.$echarts.init(document.getElementById('piegraph2'));
+                    that.chart.setOption(that.option2);
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                })
+            },
+            getUserActivity:function () {
+                var URL=global.getAPIurl()+'/v1/statistics/articles/active-users';
+                // eslint-disable-next-line no-unused-vars
+                var that=this;
+                axios.get(URL).then(function (res) {
+                        console.log(res.data);
+                        that.option.series[0].data=[
+                            {value: that.numberOfAllUsers*res.data, name: '活跃用户'},
+                            {value: that.numberOfAllUsers*(1-res.data), name: '非活跃用户'}
+                        ];
+                        that.chart = that.$echarts.init(document.getElementById('piegraph'));
+                        that.chart.setOption(that.option);
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                })
+            }
+        },
+        mounted() {
+            this.getSexRatio();
+            this.getUserActivity();
+        }
     }
-}
 </script>
 
 <style scoped>

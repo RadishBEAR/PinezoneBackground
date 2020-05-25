@@ -96,7 +96,9 @@
 
 <script>
     import AnnouncementCard from '../Announcement/AnnouncementCard'
+    import global from '../../../tools/global'
     import axios from 'axios'
+    // eslint-disable-next-line no-unused-vars
     import Vue from 'vue'
     export default {
         name: "Announcement",
@@ -240,7 +242,8 @@
                 // 获取公告列表方法
                 // 加载的时候调用一次，修改/发布公告的时候调用一次
                 var that=this;
-                var URL=Vue.prototype.$APIurl+'/v1/notices';
+                var URL=global.getAPIurl()+'/v1/notices';
+                console.log(URL);
                 // console.log(URL)
                 // eslint-disable-next-line no-unused-vars
                 var flagOfHistory=2;    // 历史公告标记位
@@ -287,7 +290,7 @@
             },
             getNameAndHead:async function (id,index) {
                 // 根据用户id获取头像和用户名的方法
-                var URL = Vue.prototype.$APIurl + '/v1/user/picture' + '?uid=' + id;
+                var URL = global.getAPIurl() + '/v1/user/picture' + '?uid=' + id;
                 // console.log(URL)
                 var path;
                 await axios.get(URL).then(function (res) {
@@ -296,7 +299,7 @@
                 }).catch(function (error) {
                     console.log(error)
                 });
-                URL = Vue.prototype.$APIurl + '/v1/user' + '?id=' + id;
+                URL = global.getAPIurl() + '/v1/user' + '?id=' + id;
                 // console.log(URL)
                 var name;
                 await axios.get(URL).then(function (res) {
@@ -310,7 +313,7 @@
                     name:name,
                     index:index
                 };
-            }
+            },
         }
     }
 </script>

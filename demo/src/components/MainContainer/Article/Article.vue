@@ -142,11 +142,13 @@
 </template>
 
 <script>
+    // eslint-disable-next-line no-unused-vars
     import Vue from 'vue'
     import BusinessCard from '../Article/BusinessCard'
     import CommentCard from '../Article/CommentCard'
     import axios from 'axios'
     import { EventBus } from '../../../tools/EventBus'
+    import global from '../../../tools/global'
     export default {
         name: "Article",
         components:{
@@ -198,8 +200,9 @@
             }
         },
         mounted() {
-            this.ArticleID=Vue.prototype.$ArticleID;
-            this.AuthorID=Vue.prototype.$AuthorID;
+            this.ArticleID=global.getArticleID();
+            this.AuthorID=global.getAuthorID();
+
             this.getArticle(this.ArticleID);
             var that=this;
             this.getHeadPortrait(this.AuthorID).then(function (result) {
@@ -272,7 +275,7 @@
             },
             getArticle:function (id) {
                 var that=this;
-                var URL=Vue.prototype.$APIurl+'/v1/article'+'?aid='+id+'&uid=2217';
+                var URL=global.getAPIurl()+'/v1/article'+'?aid='+id+'&uid=2217';
 
                 axios.get(URL).then(function(res) {
                     that.res=res.data;  // 这就是api返回的结果了
@@ -292,7 +295,7 @@
             },
             getHeadPortrait: async function (id) {
                 // 根据用户id获取头像的方法
-                var URL = Vue.prototype.$APIurl + '/v1/user/picture' + '?uid=' + id;
+                var URL = global.getAPIurl() + '/v1/user/picture' + '?uid=' + id;
                 // console.log(URL)
                 var path;
                 await axios.get(URL).then(function (res) {
@@ -305,7 +308,7 @@
             },
             getHeadPortraitInComment: async function (id,index) {
                 // 根据用户id获取头像的方法
-                var URL = Vue.prototype.$APIurl + '/v1/user/picture' + '?uid=' + id;
+                var URL = global.getAPIurl() + '/v1/user/picture' + '?uid=' + id;
                 // console.log(URL)
                 var path;
                 await axios.get(URL).then(function (res) {
@@ -321,7 +324,7 @@
             },
             getUserName:async function (id){
                 // 根据用户id获取用户名之方法
-                var URL = Vue.prototype.$APIurl + '/v1/user' + '?uid=' + id;
+                var URL = global.getAPIurl() + '/v1/user' + '?uid=' + id;
                 // console.log(URL)
                 var name;
                 await axios.get(URL).then(function (res) {
@@ -334,7 +337,7 @@
             },
             getUserNameInComment: async function (id,index){
                 // 根据用户id获取用户名之方法
-                var URL = Vue.prototype.$APIurl + '/v1/user' + '?id=' + id;
+                var URL = global.getAPIurl() + '/v1/user' + '?id=' + id;
                 // console.log(URL)
                 var name;
                 await axios.get(URL).then(function (res) {
@@ -351,7 +354,7 @@
             getComments:async function (id) {
                 // 根据文章id获取评论列表之方法
                 var that=this;
-                var URL=Vue.prototype.$APIurl+'/v1/comments'+'?aid='+id;
+                var URL=global.getAPIurl()+'/v1/comments'+'?aid='+id;
                 // console.log(URL)
                 axios.get(URL).then(function(res) {
                     that.res=res.data;  // 这就是api返回的结果了
