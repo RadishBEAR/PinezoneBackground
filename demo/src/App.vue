@@ -16,9 +16,7 @@
 
         <!--主容器-->
         <el-main style="padding: 0">
-          <keep-alive>
             <router-view></router-view>
-          </keep-alive>
         </el-main>
       </el-container>
     </el-container>

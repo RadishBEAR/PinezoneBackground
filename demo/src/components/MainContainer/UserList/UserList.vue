@@ -33,27 +33,15 @@
                     </el-table-column>
                     <el-table-column
                             prop="userLevel"
-                            label="等级">
+                            label="年级">
                     </el-table-column>
                     <el-table-column
                             prop="registrationTime"
                             label="注册时间">
                     </el-table-column>
                     <el-table-column
-                            prop="articleNumber"
-                            label="文章数">
-                    </el-table-column>
-                    <el-table-column
-                            prop="likenum"
-                            label="点赞数">
-                    </el-table-column>
-                    <el-table-column
-                            prop="fansNumber"
-                            label="粉丝数">
-                    </el-table-column>
-                    <el-table-column
-                            prop="reportNumber"
-                            label="举报数">
+                            prop="profile"
+                            label="个性签名">
                     </el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
@@ -139,74 +127,15 @@
 
 <script>
     import Vue from 'vue'
+    import axios from 'axios'
+    import global from '../../../tools/global'
     import { EventBus } from '../../../tools/EventBus'
     export default {
         name: "UserList",
         data(){
             return{
                 activeName:'first',
-                userData: [
-                    {
-                    userName:'爱吃萝卜的熊',
-                    userSex:'男',
-                    userID:'17328',
-                    userLevel:'LV5',
-                    registrationTime:'2020-4-25',
-                    articleNumber:'13',
-                    likenum:'57',
-                    fansNumber:'21',
-                    reportNumber:'3'
-                }, {
-                    userName:'提拉米猪',
-                    userSex:'女',
-                    userID:'354651',
-                    userLevel:'LV9',
-                    registrationTime:'2020-4-17',
-                    articleNumber:'31',
-                    likenum:'123',
-                    fansNumber:'57',
-                    reportNumber:'1'
-                }, {
-                    userName:'伏特加熊',
-                    userSex:'男',
-                    userID:'564657',
-                    userLevel:'LV4',
-                    registrationTime:'2020-4-17',
-                    articleNumber:'21',
-                    likenum:'23',
-                    fansNumber:'7',
-                    reportNumber:'0'
-                }, {
-                    userName:'沐风',
-                    userSex:'男',
-                    userID:'564657',
-                    userLevel:'LV4',
-                    registrationTime:'2020-4-17',
-                    articleNumber:'21',
-                    likenum:'23',
-                    fansNumber:'7',
-                    reportNumber:'0'
-                }, {
-                    userName:'方鸿渐',
-                    userSex:'男',
-                    userID:'564657',
-                    userLevel:'LV9',
-                    registrationTime:'2020-4-17',
-                    articleNumber:'21',
-                    likenum:'23',
-                    fansNumber:'7',
-                    reportNumber:'3'
-                }, {
-                    userName:'笑歌',
-                    userSex:'女',
-                    userID:'321657',
-                    userLevel:'LV11',
-                    registrationTime:'2020-4-10',
-                    articleNumber:'35',
-                    likenum:'223',
-                    fansNumber:'67',
-                    reportNumber:'2'
-                }],
+                userData: [],
                 adminUserData: [
                     {
                     adminUserNickname:'爱吃萝卜的熊',
@@ -254,11 +183,15 @@
                     duties:'审核文章',
                     note:'负责定期检查文章'
                 }],
-                totalPage:70
+                pageNumber:1,   // 页码
+                pageSize:7, // 每页条数
+                totalPage:0
             }
-        },methods:{
+        },
+        methods:{
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
+                this.pageNumber=val;
+                this.getUserList();
             },
             readArticle:function (index, row) {
                 console.log(row.userID);
@@ -289,7 +222,34 @@
                         message: '取消通知'
                     });
                 });
+            },
+            getUserList:function () {
+                var URL=global.getAPIurl()+'/v1/list/usersByPage?roleId=1'+'&pageNum='+this.pageSize+'&page='+this.pageNumber;
+                // eslint-disable-next-line no-unused-vars
+                var that=this;
+                axios.get(URL).then(function (res) {
+                        that.userData=[];
+                        that.totalPage=(res.data.UserNum/that.pageSize)*10;
+                        for(var index in res.data.userEntities){
+                            var msg=res.data.userEntities[index];
+                            var item={
+                                        userName:msg.name,
+                                        userSex:msg.sex==0?'女':'男',
+                                        userID:msg.id,
+                                        userLevel:msg.level,
+                                        registrationTime:msg.date,
+                                        profile:msg.profile==null?'这个人还没有写签名嗷！':msg.profile
+                            }
+                            that.userData.push(item);
+                        }
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                })
             }
+        },
+        mounted() {
+            this.getUserList();
         }
     }
 </script>

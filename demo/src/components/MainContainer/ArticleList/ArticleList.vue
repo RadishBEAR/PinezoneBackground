@@ -100,7 +100,7 @@
         name: "ArticleList",
         data(){
             return{
-                totalPage:40,
+                totalPage:0,
                 activeName:'diningRoom',
                 tableData:[],
                 cid:1,
@@ -109,43 +109,48 @@
                 studyArea:[],
                 play:[],
                 gym:[],
+                numbersOfAllKindsOfArticles:[]
             }
         },
         mounted() {
             this.tableData=this.diningRoom;
             this.getArticlesList(1,1);
+            this.getNumberOfAllKindsOfArticles();
         },
         methods:{
             handleClick() {
-                console.log(this.activeName);
-                this.totalPage=10;
+                console.log(this.numbersOfAllKindsOfArticles);
                 switch (this.activeName) {
                     case 'diningRoom':
                         this.tableData=this.diningRoom;
                         this.cid=1;
-                        this.totalPage=40;
+                        this.totalPage=this.numbersOfAllKindsOfArticles[0]['num']/7*10;
                         break;
                     case 'shopping':
                         this.tableData=this.shopping;
+                        this.totalPage=this.numbersOfAllKindsOfArticles[1]['num']/7*10;
                         this.cid=2;
                         break;
                     case 'studyArea':
                         this.tableData=this.studyArea;
+                        this.totalPage=this.numbersOfAllKindsOfArticles[3]['num']/7*10;
                         this.cid=4;
                         break;
                     case 'play':
                         this.tableData=this.play;
+                        this.totalPage=this.numbersOfAllKindsOfArticles[2]['num']/7*10;
                         this.cid=3;
                         break;
                     case 'gym':
                         this.tableData=this.gym;
+                        this.totalPage=this.numbersOfAllKindsOfArticles[4]['num']/7*10;
                         this.cid=5;
                         break;
                 }
                 this.getArticlesList(this.cid,1);
             },
+            // eslint-disable-next-line no-unused-vars
             handleDelete(index, row) {
-                console.log(index, row);
                 this.$confirm('此操作将删除该文章, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -186,13 +191,11 @@
                 });
             },
             handleRead(index, row){
-                console.log(row.IDOfAuthor);
                 global.setArticleID(row.ID);
                 global.setAuthorID(row.IDOfAuthor);
                 EventBus.$emit('ReadArticle',row.ID)
             },
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
                 this.getArticlesList(1,val);
             },
             getArticlesList(type,index){
@@ -201,10 +204,8 @@
                 var articleList=[];
                 var that=this;
                 axios.get(URL).then(function (res) {
-                    console.log(res.data)
                     for(index in res.data){
                         var item=res.data[index];
-                        console.log(item)
                         var article={
                                 title:item.title,
                                 author:item.username,
@@ -218,9 +219,28 @@
                         };
                         articleList.push(article);
                     }
-                    console.log(articleList)
                     that.tableData=articleList;
                 }).catch(function (error) {
+                    console.log(error)
+                })
+            },
+            getNumberOfAllKindsOfArticles(){
+                var URL=global.getAPIurl()+'/v1/statistics/articles/proportion';
+                // global.getAPIurl()返回的是服务器的地址，加上接口后缀就是完整的接口地址了
+                // eslint-disable-next-line no-unused-vars
+                var that=this;
+                axios.get(URL).then(function (res) {
+                        var nameOfTypes=['食堂','探店','玩吧','自习室','健身房'];
+                        for(var index in res.data){
+                            var item={
+                                name:nameOfTypes[res.data[index]['cid']-1],
+                                num:res.data[index]['num']
+                            };
+                            that.numbersOfAllKindsOfArticles.push(item);
+                        }
+                    that.totalPage=that.numbersOfAllKindsOfArticles[0]['num']/7*10;
+                    }
+                ).catch(function (error) {
                     console.log(error)
                 })
             }

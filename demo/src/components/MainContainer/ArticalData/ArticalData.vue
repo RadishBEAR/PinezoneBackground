@@ -16,7 +16,7 @@
                 各类文章占比
             </p>
             <div id="pieGraph">
-                <linegraph :id="'piegraph'" :data="option3" style="height:350px"></linegraph>
+                <linegraph id="piegraph" :data="option3" style="height:350px"></linegraph>
             </div>
         </div>
         <div id="diaryArticalNum">
@@ -44,7 +44,8 @@
 <script>
     import linegraph from '../ArticalData/linegraph.vue'
     import ArticalDataCard from '../ArticalData/ArticalDataCard'
-
+    import global from '../../../tools/global'
+    import axios from 'axios'
     export default {
         name: "ArticalData",
         data(){
@@ -250,7 +251,7 @@
                 },
                 series: [
                     {
-                        name: '访问占比',
+                        name: '占比',
                         type: 'pie',
                         radius: ['50%', '70%'],
                         avoidLabelOverlap: false,
@@ -292,8 +293,36 @@
     components:{
         linegraph,
         ArticalDataCard
+    },
+        methods:{
+            getNumberOfAllKindsOfArticles(){
+                var URL=global.getAPIurl()+'/v1/statistics/articles/proportion';
+                // global.getAPIurl()返回的是服务器的地址，加上接口后缀就是完整的接口地址了
+                // eslint-disable-next-line no-unused-vars
+                var that=this;
+                axios.get(URL).then(function (res) {
+                        var nameOfTypes=['食堂','探店','玩吧','自习室','健身房'];
+                        var list=[];
+                        for(var index in res.data){
+                            var item={
+                                name:nameOfTypes[res.data[index]['cid']-1],
+                                value:res.data[index]['num']
+                            };
+                            list.push(item);
+                        }
+                        that.option3.series[0].data=list;
+                        that.chart = that.$echarts.init(document.getElementById('piegraph'));
+                        that.chart.setOption(that.option3);
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                })
+            }
+        },
+        mounted() {
+            this.getNumberOfAllKindsOfArticles();
+        }
     }
-}
 </script>
 
 <style scoped>

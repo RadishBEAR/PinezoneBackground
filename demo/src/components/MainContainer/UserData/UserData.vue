@@ -337,10 +337,10 @@
             },
             getUserActivity:function () {
                 var URL=global.getAPIurl()+'/v1/statistics/articles/active-users';
-                // eslint-disable-next-line no-unused-vars
+                // global.getAPIurl()返回的是服务器的地址，加上接口后缀就是完整的接口地址了
                 var that=this;
                 axios.get(URL).then(function (res) {
-                        console.log(res.data);
+                        console.log(res.data);  // 接口返回的数据在res.data里
                         that.option.series[0].data=[
                             {value: that.numberOfAllUsers*res.data, name: '活跃用户'},
                             {value: that.numberOfAllUsers*(1-res.data), name: '非活跃用户'}
