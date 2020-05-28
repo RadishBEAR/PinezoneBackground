@@ -13,7 +13,7 @@
                 活跃用户占比
             </p>
             <div id="pieGraph">
-                <linegraph id="piegraph" :data="option" style="height:350px"></linegraph>
+                <linegraph id="piegraph" :data="option" style="height:300px"></linegraph>
             </div>
         </div>
         <div id="userSexRatio">
@@ -29,7 +29,7 @@
                 用户性别比例
             </p>
             <div id="pieGraph2">
-                <linegraph id="piegraph2" :data="option2" style="height:350px"></linegraph>
+                <linegraph id="piegraph2" :data="option2" style="height:300px"></linegraph>
             </div>
         </div>
         <div id="userActiveTime">
@@ -86,12 +86,18 @@
                         trigger: 'item',
                         formatter: '{a} <br/>{b}: {c} ({d}%)'
                     },
+                    legend: {
+                        orient: 'vertical',
+                        top:'80%',
+                        x: 'left',
+                        left : '40px',
+                        data: ['活跃用户','非活跃用户']
+                    },
                     series: [
                         {
                             name: '活跃用户占比',
                             type: 'pie',
-                            radius: ['40%', '60%'],
-                            avoidLabelOverlap: false,
+                            radius: ['50%', '70%'],
                             label: {
                                 show: false,
                                 position: 'center'
@@ -99,7 +105,7 @@
                             emphasis: {
                                 label: {
                                     show: true,
-                                    fontSize: '30',
+                                    fontSize: '25',
                                     fontWeight: 'bold'
                                 }
                             },
@@ -107,10 +113,10 @@
                                 show: false
                             },
                             data: [
-                                {value: 335, name: '活跃'},
-                                {value: 310, name: '不活跃'}
+                                {value: 335, name: '活跃用户'},
+                                {value: 310, name: '非活跃用户'}
                             ],
-                            color: ['#9ACD32','#A1A1A1'],
+                            color: ['#ff847c','#A1A1A1'],
                         }
                     ]
                 },
@@ -119,11 +125,18 @@
                         trigger: 'item',
                         formatter: '{a} <br/>{b}: {c} ({d}%)'
                     },
+                    legend: {
+                        orient: 'vertical',
+                        top:'80%',
+                        x: 'left',
+                        left : '40px',
+                        data: ['男','女']
+                    },
                     series: [
                         {
                             name: '用户性别比例',
                             type: 'pie',
-                            radius: ['40%', '60%'],
+                            radius: ['50%', '70%'],
                             avoidLabelOverlap: false,
                             label: {
                                 show: false,
@@ -140,7 +153,7 @@
                                 show: false
                             },
                             data: [],
-                            color: ['#00B2EE','#FF83FA'],
+                            color: ['#4d80e4','#e84a5f'],
                         }
                     ]
                 },
@@ -157,9 +170,9 @@
                     },
                     title:{
                         text: '用户活跃时间段',
-                        left: 'left',
+                        left: '40px',
                         textStyle: {
-                            fontSize: 22,
+                            fontSize: 18,
                             align: 'center',
                             lineHeight: 60
                         }
@@ -205,9 +218,9 @@
                     },
                     title: {
                         text: '用户活跃度',
-                        left: 'left',
+                        left: '40px',
                         textStyle: {
-                            fontSize: 22,
+                            fontSize: 18,
                             align: 'center',
                             lineHeight: 60
                         }
@@ -227,20 +240,20 @@
                         type: 'category',
                         name: '日期',
                         nameTextStyle: {
-                            color: '#D9D9D9',
+                            color: '#A1A1A1',
                             fontSize: 17
                         },
                         axisLabel: {
                             show: true,
                             textStyle: {
-                                color: '#D9D9D9',
+                                color: '#A1A1A1',
                                 // fontSize: '38',//字体大小
                             },
                             fontSize: 12,//字体大小
                         },
                         axisLine: {       //坐标轴轴线
                             lineStyle: {           //坐标轴轴线颜色
-                            color: '#D9D9D9'
+                            color: '#A1A1A1'
                             }
                         },
                         data: ['5.1', '5.2', '5.3', '5.4', '5.5', '5.6', '5.7','5.8','5.9','5.10','5.11','5.12','5.13','5.14','5.15'],
@@ -253,7 +266,7 @@
                         type: 'value',
                         name: '数量',
                         nameTextStyle: {
-                            color: '#D9D9D9',
+                            color: '#A1A1A1',
                             fontSize: 17
                         },
                         splitLine:{
@@ -262,14 +275,14 @@
                         axisLabel: {
                             show: true,
                             textStyle: {
-                                color: '#D9D9D9',
+                                color: '#A1A1A1',
                                 // fontSize: '38',//字体大小
                             },
                             fontSize: 12,//字体大小
                         },
                         axisLine: {       //坐标轴轴线
                             lineStyle: {           //坐标轴轴线颜色
-                            color: '#FFD700'
+                            color: '#A1A1A1'
                             }
                         }
                     },
@@ -285,7 +298,7 @@
                                 type: 'linear',
                                 colorStops: [{
                                     offset: 0,
-                                    color: '#00FFFF'
+                                    color: '#6886c5'
                                 },{
                                     offset: 1,
                                     color: '#0000EE'
@@ -341,10 +354,11 @@
                 var that=this;
                 axios.get(URL).then(function (res) {
                         console.log(res.data);  // 接口返回的数据在res.data里
-                        that.option.series[0].data=[
-                            {value: that.numberOfAllUsers*res.data, name: '活跃用户'},
-                            {value: that.numberOfAllUsers*(1-res.data), name: '非活跃用户'}
+                        var list=[
+                            {name: '活跃用户',value:that.numberOfAllUsers*res.data},
+                            {name: '非活跃用户',value: that.numberOfAllUsers*(1-res.data)}
                         ];
+                        that.option.series[0].data=list;
                         that.chart = that.$echarts.init(document.getElementById('piegraph'));
                         that.chart.setOption(that.option);
                     }
@@ -364,6 +378,7 @@
 #userData{
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 #userActiveScale{
     width: 20%;

@@ -7,8 +7,7 @@
                 <p style="color: #5d4037;
                 margin-top: 25px;
                 margin-left: 5px;
-                font-weight: 600;
-                font-size: 18px;
+                font-size: 16px;
                 text-align: left">
                     {{item}}
                 </p>

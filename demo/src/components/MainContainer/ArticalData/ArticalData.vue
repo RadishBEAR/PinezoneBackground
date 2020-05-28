@@ -28,11 +28,11 @@
                 margin-top: 0;
                 margin-bottom: 15px;
                 padding-top: 30px;
-                padding-left: 50px;
+                padding-left: 40px;
                 color: #000000;
                 font-size: 18px;
                 font-weight: 600;">
-                高举报率文章
+                高举报数文章
             </p>
             <ArticalDataCard
                     :articalName="this.articlesNames"
