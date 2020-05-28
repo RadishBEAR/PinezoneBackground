@@ -126,7 +126,7 @@
 </template>
 
 <script>
-    import Vue from 'vue'
+    // import Vue from 'vue'
     import axios from 'axios'
     import global from '../../../tools/global'
     import { EventBus } from '../../../tools/EventBus'
@@ -195,15 +195,10 @@
             },
             readArticle:function (index, row) {
                 console.log(row.userID);
-                Vue.prototype.$ArticleID=this.getLatestArticles(row.userID);
+                global.setArticleID(-1);
                 // Vue.prototype.$AuthorID=row.userID;
-                Vue.prototype.$AuthorID=2231;
+                global.setAuthorID(row.userID);
                 EventBus.$emit('ReadArticle',row.ID)
-            },
-            getLatestArticles:function (id) {
-                // 获取用户最新的文章id，给文章详细页渲染用
-                console.log(id);
-                return '1732';
             },
             sendMessage:function () {
                 this.$prompt('请输入通知内容', '提示', {

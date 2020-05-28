@@ -204,7 +204,6 @@
                         show: true,
                         textStyle: {
                             color: '#A1A1A1',
-                            // fontSize: '38',//字体大小
                         },
                         fontSize: 12,//字体大小
                     }

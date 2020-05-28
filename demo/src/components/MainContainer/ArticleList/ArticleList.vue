@@ -44,7 +44,9 @@
                 </el-table-column>
                 <el-table-column
                         prop="releaseTime"
-                        label="发布时间">
+                        label="发布时间"
+                        width="240"
+                >
                 </el-table-column>
                 <el-table-column
                         prop="likenum"
@@ -61,6 +63,12 @@
                 <el-table-column
                         prop="reportNumber"
                         label="举报数">
+                    <template slot-scope="scope">
+                        <font v-if="scope.row.reportNumber === 0">{{scope.row.reportNumber}}</font>
+                        <font v-else-if="scope.row.reportNumber != 0"
+                              style="font-weight: 600"
+                              color="red">{{scope.row.reportNumber}}</font>
+                    </template>
                 </el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
@@ -205,6 +213,7 @@
                 var that=this;
                 axios.get(URL).then(function (res) {
                     for(index in res.data){
+                        console.log(res.data[index]);
                         var item=res.data[index];
                         var article={
                                 title:item.title,
@@ -213,11 +222,13 @@
                                 ID:item.aid,
                                 releaseTime:item.date,
                                 likenum:item.likenum,
-                                privateIntFcount:parseInt(Math.random() * 10),
-                                comments:parseInt(Math.random() * 10),
-                                reportNumber:parseInt(Math.random() *4)
+                                privateIntFcount:'',
+                                comments:'',
+                                reportNumber:0
                         };
                         articleList.push(article);
+                        that.getReported(item.aid,index);
+                        that.getArticle(item.aid,index);
                     }
                     that.tableData=articleList;
                 }).catch(function (error) {
@@ -243,6 +254,37 @@
                 ).catch(function (error) {
                     console.log(error)
                 })
+            },
+            getArticle:function (id,index) {
+                var that=this;
+                var URL=global.getAPIurl()+'/v1/article'+'?aid='+id+'&uid=2217';
+
+                axios.get(URL).then(function(res) {
+                    that.res=res.data;  // 这就是api返回的结果了
+                    that.tableData[index]['privateIntFcount']=res.data['starnum'];
+                    that.tableData[index]['comments']=res.data['commentnum'];
+                }).catch(function (error) {
+                    console.log(error)
+                    that.res=error;
+                })
+            },
+            getReported:function (id,index) {
+                var URL=global.getAPIurl()+'/v1/statistics/articles/reported-articles-list';
+                // global.getAPIurl()返回的是服务器的地址，加上接口后缀就是完整的接口地址了
+                var that=this;
+                axios.get(URL).then(function (res) {
+                        console.log(res.data);  // 接口返回的数据在res.data里
+                        for (var i in res.data){
+                            if (res.data[i]['aid']==id){
+                                that.tableData[index]['reportNumber']=res.data[i]['num'];
+                                break;
+                            }
+                        }
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                })
+
             }
         }
     }

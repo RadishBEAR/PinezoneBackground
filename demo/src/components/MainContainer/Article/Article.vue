@@ -110,7 +110,7 @@
                 </div>
             </div>
             <div style="height: 67%;margin-left: 50px;margin-right: 50px">
-                <happy-scroll hide-horizontal color="rgba(0,0,0,0.5)" style="height: 90%;width: 100%">
+                <happy-scroll hide-horizontal color="rgba(0,0,0,0.5)" style="height: 90%;width: 100%;">
                     <el-table
                             @row-click="clickArticle"
                             :data="tableData"
@@ -118,10 +118,6 @@
                         <el-table-column
                                 show-header="false"
                                 prop="title"
-                                >
-                        </el-table-column>
-                        <el-table-column
-                                prop="time"
                                 >
                         </el-table-column>
                     </el-table>
@@ -147,6 +143,7 @@
     import BusinessCard from '../Article/BusinessCard'
     import CommentCard from '../Article/CommentCard'
     import axios from 'axios'
+    // eslint-disable-next-line no-unused-vars
     import { EventBus } from '../../../tools/EventBus'
     import global from '../../../tools/global'
     export default {
@@ -162,32 +159,16 @@
                 author:'',
                 numberOfArticles:'57',
                 numberOfFans:'17',
-                numberOfReports:'2',
-                headPortrait:'',
-                tableData:[
-                    {
-                        title:'程序员快乐屋',
-                        time:'2020-4-23',
-                        id:'1713',
-                    },
-                    {
-                        title:'是什么让芝士乌龙成为最好喝的奶茶',
-                        time:'2020-4-13',
-                        id:'23113',
-                    },
-                    {
-                        title:'益和堂的三月',
-                        time:'2020-3-23',
-                        id:'15713',
-                    },
-                ],
+                numberOfReports:'0',
+                headPortrait:'2',
+                tableData:[],
                 articleData:{
                     releaseTime:'',
                     author:'',
                     AuthorID:'',
 
                     likenum:'',
-                    collectNumber:'17',
+                    collectNumber:'',
                     commentNumber:0,
                     reportNumber:'1',
 
@@ -200,15 +181,12 @@
             }
         },
         mounted() {
-            this.ArticleID=global.getArticleID();
-            this.AuthorID=global.getAuthorID();
-
-            this.getArticle(this.ArticleID);
-            var that=this;
-            this.getHeadPortrait(this.AuthorID).then(function (result) {
-                that.headPortrait=result;
-            });
-            this.getComments(this.ArticleID);
+            if(global.getArticleID()===-1){
+                this.getLatestArticles(global.getAuthorID());
+            }
+            else{
+                this.getData();
+            }
         },
         methods:{
             delete:function () {
@@ -271,7 +249,14 @@
             },
             clickArticle:function (row) {
                 console.log(row.id);
-                EventBus.$emit('ReadArticle',row.id)
+                global.setArticleID(row.id);
+                this.ArticleID=row.id;
+                this.ArticleID=global.getArticleID();
+                this.AuthorID=global.getAuthorID();
+                this.articleData.comments=[];
+                this.articleData.commentNumber=0;
+                this.getArticle(this.ArticleID);
+                this.getComments(this.ArticleID);
             },
             getArticle:function (id) {
                 var that=this;
@@ -282,6 +267,7 @@
                     // console.log(res.data)
                     that.articleData.content=res.data['content'];
                     that.articleData.likenum=res.data['likenum'];
+                    that.articleData.collectNumber=res.data['starnum'];
                     that.articleData.title=res.data['title'];
                     var imgList=res.data['aimg'];    // 此处是图片列表解析策略
                     that.articleData.img=imgList;
@@ -321,19 +307,6 @@
                         path:path,
                         index:index
                 };
-            },
-            getUserName:async function (id){
-                // 根据用户id获取用户名之方法
-                var URL = global.getAPIurl() + '/v1/user' + '?uid=' + id;
-                // console.log(URL)
-                var name;
-                await axios.get(URL).then(function (res) {
-                    // console.log(res.data['path'])
-                    name=res.data['name'];
-                }).catch(function (error) {
-                    console.log(error)
-                })
-                return name;
             },
             getUserNameInComment: async function (id,index){
                 // 根据用户id获取用户名之方法
@@ -380,6 +353,76 @@
                     console.log(error)
                     that.res=error;
                 })
+            },
+            getArticlseList(){
+                // 获取该用户的文章列表
+                var uid=global.getAuthorID();
+                var URL=global.getAPIurl()+'/v1/userArticle-list?uid='+uid+'&page=1&pageSize=2000';
+                // global.getAPIurl()返回的是服务器的地址，加上接口后缀就是完整的接口地址了
+                // eslint-disable-next-line no-unused-vars
+                var that=this;
+                that.tableData=[];
+                axios.get(URL).then(function (res) {
+                        console.log(res.data);
+                        for (var index in res.data){
+                            var item={
+                                title:res.data[index]['title'],
+                                time:res.data[index]['date'],
+                                id:res.data[index]['aid'],
+                            };
+                            that.tableData.push(item);
+                        }
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                })
+            },
+            getData:function() {
+                this.ArticleID=global.getArticleID();
+                this.AuthorID=global.getAuthorID();
+                this.getArticle(this.ArticleID);
+                var that=this;
+                this.getHeadPortrait(this.AuthorID).then(function (result) {
+                    that.headPortrait=result;
+                });
+                this.getComments(this.ArticleID);
+                this.getReported();
+                this.getArticlseList();
+            },
+            getLatestArticles:async function  (id) {
+                // 获取用户最新的文章id，给文章详细页渲染用
+                var URL=global.getAPIurl()+'/v1/userArticle-list?uid='+id+'&page=1&pageSize=2000';
+                // global.getAPIurl()返回的是服务器的地址，加上接口后缀就是完整的接口地址了
+                // eslint-disable-next-line no-unused-vars
+                var aid;
+                var that=this;
+                await axios.get(URL).then(function (res) {
+                        aid=res.data[0]['aid'];
+                        global.setArticleID(aid);
+                        that.getData();
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                });
+            },
+            getReported:function () {
+                var URL=global.getAPIurl()+'/v1/statistics/articles/reported-articles-list';
+                // global.getAPIurl()返回的是服务器的地址，加上接口后缀就是完整的接口地址了
+                var that=this;
+                var aid=global.getArticleID();
+                axios.get(URL).then(function (res) {
+                        console.log(res.data);  // 接口返回的数据在res.data里
+                        for (var i in res.data){
+                            if (res.data[i]['aid']==aid){
+                                that.articleData.reportNumber=res.data[i]['num'];
+                                break;
+                            }
+                        }
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                })
+
             }
         }
     }
