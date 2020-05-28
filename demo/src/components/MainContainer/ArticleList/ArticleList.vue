@@ -173,10 +173,22 @@
                             confirmButtonText: '确定',
                             cancelButtonText: '取消'
                         }).then(({ value }) => {
-                            this.$message({
-                                type: 'success',
-                                message: '已删除文章'
-                            });
+                            // 这里加要做什么操作
+                            var URL=global.getAPIurl()+'/v1/article?aid='+row.ID;
+                            // global.getAPIurl()返回的是服务器的地址，加上接口后缀就是完整的接口地址了
+                            var that=this;
+                            // eslint-disable-next-line no-unused-vars
+                            axios.delete(URL).then(function (res) {
+                                    that.$message({
+                                        type: 'success',
+                                        message: '已删除文章'
+                                    });
+                                }
+                            ).catch(function (error) {
+                                console.log(error)
+                            })
+
+
                             // 这里加要做什么操作
                             console.log(value);
                         }).catch(() => {

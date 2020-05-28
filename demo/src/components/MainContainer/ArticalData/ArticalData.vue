@@ -9,14 +9,14 @@
                 margin-top: 0;
                 margin-bottom: 15px;
                 padding-top: 30px;
-                padding-left: 50px;
+                padding-left: 20px;
                 color: #000000;
-                font-size: 20px;
+                font-size: 18px;
                 font-weight: 600;">
                 各类文章占比
             </p>
             <div id="pieGraph">
-                <linegraph id="piegraph" :data="option3" style="height:350px"></linegraph>
+                <linegraph id="piegraph" :data="option3" style="height:300px"></linegraph>
             </div>
         </div>
         <div id="diaryArticalNum">
@@ -63,11 +63,11 @@
                 },
                 title: {
                     text: '每日阅读量',
-                    left: 'left',
+                    left: '40px',
                     textStyle: {
-                        fontSize: 22,
+                        fontSize: 18,
                         align: 'center',
-                        lineHeight: 60
+                        lineHeight: 70
                     }
                 },
                 xAxis: {
@@ -78,27 +78,27 @@
                     type: 'category',
                     name: '日期',
                     nameTextStyle: {
-                        color: '#FF7F50',
+                        color: '#A1A1A1',
                         fontSize: 17
                     },
                     axisLabel: {
                         show: true,
                         textStyle: {
-                            color: '#FFD700',
+                            color: '#A1A1A1',
                             // fontSize: '38',//字体大小
                         },
                         fontSize: 12,//字体大小
                     },
                     axisLine: {       //坐标轴轴线
                         lineStyle: {           //坐标轴轴线颜色
-                        color: '#FFD700'
+                        color: '#A1A1A1'
                         }
                     },
                     data: ['5.1', '5.2', '5.3', '5.4', '5.5', '5.6', '5.7'],
                     splitLine:{
                         show:true,
                         lineStyle:{
-                            color:'#FFF68F',
+                            color:'#A1A1A1',
                             opacity:0.1
                         }
                     }
@@ -107,7 +107,7 @@
                     type: 'value',
                     name: '数量',
                     nameTextStyle: {
-                        color: '#FF7F50',
+                        color: '#A1A1A1',
                         fontSize: 17
                     },
                     splitLine:{
@@ -116,14 +116,14 @@
                     axisLabel: {
                         show: true,
                         textStyle: {
-                            color: '#FFD700',
+                            color: '#A1A1A1',
                             // fontSize: '38',//字体大小
                         },
                         fontSize: 12,//字体大小
                     },
                     axisLine: {       //坐标轴轴线
                         lineStyle: {           //坐标轴轴线颜色
-                        color: '#FFD700'
+                        color: '#A1A1A1'
                         }
                     }
                 },
@@ -169,11 +169,11 @@
                 },
                 title: {
                     text: '每日新增文章',
-                    left: 'left',
+                    left: '40px',
                     textStyle: {
-                        fontSize: 22,
+                        fontSize: 18,
                         align: 'center',
-                        lineHeight: 60
+                        lineHeight: 70
                     }
                 },
                 xAxis: {
@@ -181,7 +181,7 @@
                     name: '日期',
                     data: ['5.1', '5.2', '5.3', '5.4', '5.5', '5.6', '5.7'],
                     nameTextStyle: {
-                        color: '#00BFFF',
+                        color: '#A1A1A1',
                         fontSize: 17
                     },
                     axisLabel: {
@@ -197,7 +197,7 @@
                     name: '数量',
                     type: 'value',
                     nameTextStyle: {
-                        color: '#00BFFF',
+                        color: '#A1A1A1',
                         fontSize: 17
                     },
                     axisLabel: {
@@ -245,8 +245,8 @@
                     orient: 'vertical',
                     top:'50%',
                     x: 'left',
-                    left : '10',
-                    data: ['食堂', '运动', '玩吧', '自习室', '探店']
+                    left : '20px',
+                    data: ['食堂',  '玩吧', '探店', '自习室','健身房']
                 },
                 series: [
                     {
@@ -261,7 +261,7 @@
                         emphasis: {
                             label: {
                                 show: true,
-                                fontSize: '30',
+                                fontSize: '25',
                                 fontWeight: 'bold'
                             }
                         },
@@ -328,6 +328,7 @@
 #articalData{
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 #articalData>>>happy-scroll-content{
     display:block!important;
