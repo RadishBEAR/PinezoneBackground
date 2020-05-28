@@ -3,7 +3,7 @@
             <div style="width: 100%;height: 30px;"
                  v-for="(item,index) in activeUserTop"
                  :key="index">
-                <p style="color: #5d4037;margin-top: 0;margin-left: 5px;font-size: 24px;text-align: left;font-weight: 600">
+                <p style="color: #5d4037;margin-top: 0;margin-left: 5px;font-size: 18px;text-align: left;font-weight: 500">
                     {{"Top"+(index+1)+": "+item}}
                 </p>
             </div>

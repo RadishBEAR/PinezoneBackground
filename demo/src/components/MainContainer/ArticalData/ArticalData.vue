@@ -20,7 +20,7 @@
             </div>
         </div>
         <div id="diaryArticalNum">
-                <linegraph :id="'linegraph2'" :data="option2" style="height:350px"></linegraph>
+                <linegraph id="linegraph2" :data="option2" style="height:350px"></linegraph>
         </div>
         <div id="highReportArtical">
             <p
@@ -179,7 +179,7 @@
                 xAxis: {
                     type: 'category',
                     name: '日期',
-                    data: ['5.1', '5.2', '5.3', '5.4', '5.5', '5.6', '5.7'],
+                    data: [],
                     nameTextStyle: {
                         color: '#A1A1A1',
                         fontSize: 17
@@ -216,7 +216,7 @@
                     containLabel: true
                 },
                 series: {
-                    data: [18, 35, 40, 20, 80, 100, 70],
+                    data: [],
                     type: 'line',
                     lineStyle: {
                         normal: {
@@ -225,7 +225,7 @@
                                 type: 'linear',
                                 colorStops: [{
                                     offset: 0,
-                                    color: '#00FFFF'
+                                    color: '#6886c5'
                                 },{
                                     offset: 1,
                                     color: '#0000EE'
@@ -279,7 +279,7 @@
                     }
                 ]
             },
-                articlesNames:[
+            articlesNames:[
                     "震惊！福大食堂后厨竟有如此惊天大秘密！",
                     "生泪控诉学生街XXX店之卑劣营销",
                     "童叟无欺！不花钱还赚钱的夹娃娃店！",
@@ -316,10 +316,36 @@
                 ).catch(function (error) {
                     console.log(error)
                 })
+            },
+            getNumberOfNewArticles:function () {
+                let yy = new Date().getFullYear();
+                let mm = new Date().getMonth() + 1;
+                let dd = new Date().getDate();
+                var date=yy + "-" + mm + "-" + dd;
+                console.log(date);
+                var URL=global.getAPIurl()+'/v1/statistics/articles/new';
+                // eslint-disable-next-line no-unused-vars
+                var that=this;
+                axios.get(URL).then(function (res) {
+                    var index = res.data.length-1;
+                    console.log(index);
+                    var begin=index-14;
+                       while(begin<=index){
+                           that.option2.xAxis.data.push(res.data[begin]['date']);
+                           that.option2.series.data.push(res.data[begin]['num']);
+                           begin++;
+                       }
+                    that.chart = that.$echarts.init(document.getElementById('linegraph2'));
+                    that.chart.setOption(that.option2);
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                })
             }
         },
         mounted() {
             this.getNumberOfAllKindsOfArticles();
+            this.getNumberOfNewArticles();
         }
     }
 </script>
