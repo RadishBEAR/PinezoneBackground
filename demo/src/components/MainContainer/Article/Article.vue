@@ -102,11 +102,11 @@
                         style="margin-top: 50px;margin-left: 50px"
                 ></BusinessCard>
                 <div style="margin-top: 20px;font-size: 18px;color: #8f99a5">
-                    <span>文章：57</span>
+                    <span>文章：{{this.numberOfArticles}}</span>
                     <el-divider direction="vertical"></el-divider>
-                    <span>粉丝：17</span>
+                    <span>性别：{{this.sex}}</span>
                     <el-divider direction="vertical"></el-divider>
-                    <span>举报：2</span>
+                    <span>年级：{{this.level}}</span>
                 </div>
             </div>
             <div style="height: 67%;margin-left: 50px;margin-right: 50px">
@@ -155,11 +155,11 @@
         data(){
             return{
                 AuthorID:'',
-                sign:'小如一首歌,小如一个吻',
+                sign:'',
                 author:'',
-                numberOfArticles:'57',
-                numberOfFans:'17',
-                numberOfReports:'0',
+                numberOfArticles:'0',
+                sex:'',
+                level:'0',
                 headPortrait:'2',
                 tableData:[],
                 articleData:{
@@ -382,6 +382,7 @@
                             };
                             that.tableData.push(item);
                         }
+                        that.numberOfArticles=res.data.length;
                     }
                 ).catch(function (error) {
                     console.log(error)
@@ -398,6 +399,7 @@
                 this.getComments(this.ArticleID);
                 this.getReported();
                 this.getArticlseList();
+                this.getUserInfo();
             },
             getLatestArticles:async function  (id) {
                 // 获取用户最新的文章id，给文章详细页渲染用
@@ -428,6 +430,36 @@
                                 break;
                             }
                         }
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                })
+
+            },
+            getUserInfo:function () {
+
+                var URL=global.getAPIurl()+'/v1/user?id='+global.getAuthorID();
+                // eslint-disable-next-line no-unused-vars
+                var that=this;
+                axios.get(URL).then(function (res) {
+                    console.log(res.data);
+                        if(res.data.profile==null){
+                            that.sign='TA还没有签名嗷';
+                        }
+                        else{
+                            that.sign=res.data.profile;
+                        }
+                        if(res.data.sex==0){
+                            that.sex='女';
+                        }
+                        else if(res.data.sex==1){
+                            that.sex='男';
+                        }
+                        else {
+                            that.sex='??';
+                        }
+                        that.level=res.data.level;
+
                     }
                 ).catch(function (error) {
                     console.log(error)
