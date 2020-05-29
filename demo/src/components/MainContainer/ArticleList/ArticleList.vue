@@ -261,7 +261,7 @@
                             };
                             that.numbersOfAllKindsOfArticles.push(item);
                         }
-                    that.totalPage=that.numbersOfAllKindsOfArticles[0]['num']/7*10;
+                    that.totalPage= that.numbersOfAllKindsOfArticles[0]['num']/7*10;
                     }
                 ).catch(function (error) {
                     console.log(error)

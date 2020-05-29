@@ -145,10 +145,10 @@
                                 type: 'linear',
                                 colorStops: [{
                                     offset: 0,
-                                    color: '#FFF68F'
+                                    color: '#ff9a76'
                                 },{
                                     offset: 1,
-                                    color: '#FF3030'
+                                    color: '#f96d80'
                                 }],
                                 globalCoord:false
                             }
@@ -323,24 +323,79 @@
                 let dd = new Date().getDate();
                 var date=yy + "-" + mm + "-" + dd;
                 console.log(date);
+                var daysToShow=30; // 显示多久
                 var URL=global.getAPIurl()+'/v1/statistics/articles/new';
                 // eslint-disable-next-line no-unused-vars
                 var that=this;
+                // eslint-disable-next-line no-unused-vars
                 axios.get(URL).then(function (res) {
-                    var index = res.data.length-1;
-                    console.log(index);
-                    var begin=index-14;
-                       while(begin<=index){
-                           that.option2.xAxis.data.push(res.data[begin]['date']);
-                           that.option2.series.data.push(res.data[begin]['num']);
+                    var begin=0;
+                    var index=res.data.length-1;
+                    var ListOfDate=[];
+                    var ListOfData=[];
+                       while(begin<=daysToShow){
+                           var myDate=that.dateCalculation(date,-1*begin);
+                           // eslint-disable-next-line no-constant-condition
+                           while(true){
+                               if(index===-1){
+                                   ListOfDate.push(0);
+                                   break;
+                               }
+                               console.log(myDate,res.data[index]['date']);
+                               if(myDate==res.data[index]['date']){
+                                   ListOfDate.push(res.data[index]['num']);
+                                   break;
+                               }
+                               if(that.dateJudge(myDate,res.data[index]['date'])===1){
+                                   index--;
+                               }
+                               else if(that.dateJudge(myDate,res.data[index]['date'])===0){
+                                   ListOfDate.push(0);
+                                   break;
+                               }
+                           }
+                           ListOfData.push(myDate);
                            begin++;
                        }
+                       console.log(ListOfDate,ListOfData);
+                    index=ListOfDate.length-1;
+                    while (index>=0)
+                    {
+                        that.option2.series.data.push(ListOfDate[index]);
+                        that.option2.xAxis.data.push(ListOfData[index]);
+                        index--;
+                    }
                     that.chart = that.$echarts.init(document.getElementById('linegraph2'));
                     that.chart.setOption(that.option2);
                     }
                 ).catch(function (error) {
                     console.log(error)
                 })
+            },
+            dateCalculation:function (date,days) {
+                // 时间计算函数
+                var d=new Date(date);
+                d.setDate(d.getDate()+days);
+                var m=d.getMonth()+1;
+                if(m<10){
+                    m='0'+m;
+                }
+                return d.getFullYear()+'-'+m+'-'+d.getDate();
+            },
+            dateJudge:function (date0,date1) {
+                // date0=2020.5.1，date1=2020.5.19，返回1
+                var d0=new Date(date0);
+                var d1=new Date(date1);
+                if(d0.getFullYear()<d1.getFullYear()){
+                    return 1;
+                }
+                if(d0.getMonth()<d1.getMonth()){
+                    return 1;
+                }
+                if(d0.getDate()<d1.getDate()){
+                    return 1;
+                }
+                return 0;
             }
         },
         mounted() {
