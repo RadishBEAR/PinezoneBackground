@@ -218,6 +218,7 @@
                 series: {
                     data: [],
                     type: 'line',
+                    smooth: true,  //true 为平滑曲线，false为直线
                     lineStyle: {
                         normal: {
                             width: 2,
@@ -250,6 +251,7 @@
                 },
                 series: [
                     {
+
                         name: '占比',
                         type: 'pie',
                         radius: ['50%', '70%'],
@@ -336,11 +338,7 @@
                        while(begin<=daysToShow){
                            var myDate=that.dateCalculation(date,-1*begin);
                            // eslint-disable-next-line no-constant-condition
-                           while(true){
-                               if(index===-1){
-                                   ListOfDate.push(0);
-                                   break;
-                               }
+                           while(index>=0){
                                console.log(myDate,res.data[index]['date']);
                                if(myDate==res.data[index]['date']){
                                    ListOfDate.push(res.data[index]['num']);

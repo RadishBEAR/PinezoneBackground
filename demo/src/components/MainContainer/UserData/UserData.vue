@@ -310,14 +310,6 @@
                     }
                 },
                 activeUserTop:[
-                    "苯甲醚",
-                    "爱吃萝卜的熊",
-                    "提拉米猪",
-                    "伏特加熊",
-                    "沐风",
-                    "笑歌",
-                    "是狮子啊",
-                    "大白鹅",
                 ],
                 numberOfAllUsers:0
         }
@@ -332,9 +324,7 @@
                 var URL=global.getAPIurl()+'/v1/statistics/articles/sex-radio';
                 // eslint-disable-next-line no-unused-vars
                 var that=this;
-                console.log(URL);
                 axios.get(URL).then(function (res) {
-                    console.log(that.option2.series[0].data);
                     that.numberOfAllUsers=res.data[0]['num']+res.data[1]['num'];
                     var item=[
                         {value:res.data[1]['num'],name:res.data[1]['sex']},
@@ -353,7 +343,6 @@
                 // global.getAPIurl()返回的是服务器的地址，加上接口后缀就是完整的接口地址了
                 var that=this;
                 axios.get(URL).then(function (res) {
-                        console.log(res.data);  // 接口返回的数据在res.data里
                         var list=[
                             {name: '活跃用户',value:that.numberOfAllUsers*res.data},
                             {name: '非活跃用户',value: that.numberOfAllUsers*(1-res.data)}
@@ -365,11 +354,66 @@
                 ).catch(function (error) {
                     console.log(error)
                 })
+            },
+            getActiveUsers:function () {
+                var URL=global.getAPIurl()+'/v1/statistics/articles/activity';
+                // eslint-disable-next-line no-unused-vars
+                var that=this;
+                // eslint-disable-next-line no-unused-vars
+                var numberToShow=9;
+                axios.get(URL).then(function (res) {
+                        for (var index in res.data){
+                            var item={
+                                uid:res.data[index]['uid'],
+                                name:res.data[index]['uid'],
+                                leastArtical:res.data[index]['uid'],
+                                active: res.data[index]['active']
+                            };
+                            that.activeUserTop.push(item);
+                        }
+                        that.sort();
+                        for (var index2 in that.activeUserTop){
+                            that.getUserName(index2,that.activeUserTop[index2]['uid']);
+                        }
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                })
+
+            },
+            getUserName:function(index,id){
+                var URL=global.getAPIurl()+'/v1/user?id='+id;
+                // eslint-disable-next-line no-unused-vars
+                var that=this;
+                axios.get(URL).then(function (res) {
+                        that.activeUserTop[index]['name']=res.data['name'];
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                })
+            },
+            sort:function () {
+                // 是简单排序算法
+                for (var i0=0;i0<this.activeUserTop.length;i0++){
+                    for (var i1=i0;i1<this.activeUserTop.length;i1++){
+                        if(parseInt(this.activeUserTop[i0]['active']) < parseInt(this.activeUserTop[i1]['active'])){
+                            let item=this.activeUserTop[i0];
+                            this.activeUserTop[i0]=this.activeUserTop[i1];
+                            this.activeUserTop[i1]=item;
+                        }
+                    }
+                }
+                var list=[];
+                for (var i3=0;i3<9;i3++){
+                    list.push(this.activeUserTop[i3]);
+                }
+                this.activeUserTop=list;
             }
         },
         mounted() {
             this.getSexRatio();
             this.getUserActivity();
+            this.getActiveUsers();
         }
     }
 </script>

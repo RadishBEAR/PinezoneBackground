@@ -4,7 +4,7 @@
             <div style="width: 90%;"
                  v-for="(item,index) in this.articalName"
                  :key="index">
-                <p style="color: #5d4037;
+                <p style="color: #000000;
                 margin-top: 25px;
                 margin-left: 5px;
                 font-size: 16px;
