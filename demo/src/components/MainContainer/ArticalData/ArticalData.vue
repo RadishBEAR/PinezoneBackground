@@ -255,14 +255,7 @@
                         }
                     ]
                 },
-                articlesNames:[
-                    "震惊！福大食堂后厨竟有如此惊天大秘密！",
-                    "生泪控诉学生街XXX店之卑劣营销",
-                    "童叟无欺！不花钱还赚钱的夹娃娃店！",
-                    "人神共愤！如此美味之片皮鸭竟然只卖2块钱？",
-                    "喝了这杯奶茶，我哭了3天",
-                    "我一开始也不信XX的奶茶能减肥"
-                ]
+                articlesNames:[]
             }
         },
         components:{
@@ -298,7 +291,6 @@
                 let mm = new Date().getMonth() + 1;
                 let dd = new Date().getDate();
                 var date=yy + "-" + mm + "-" + dd;
-                console.log(date);
                 var daysToShow=30; // 显示多久
                 var URL=global.getAPIurl()+'/v1/statistics/articles/new';
                 // eslint-disable-next-line no-unused-vars
@@ -313,7 +305,6 @@
                             var myDate=that.dateCalculation(date,-1*begin);
                             // eslint-disable-next-line no-constant-condition
                             while(index>=0){
-                                console.log(myDate,res.data[index]['date']);
                                 if(myDate==res.data[index]['date']){
                                     ListOfDate.push(res.data[index]['num']);
                                     break;
@@ -329,7 +320,6 @@
                             ListOfData.push(myDate);
                             begin++;
                         }
-                        console.log(ListOfDate,ListOfData);
                         index=ListOfDate.length-1;
                         while (index>=0)
                         {
@@ -353,7 +343,6 @@
                 var start=this.dateCalculation(end,-1*daysToShow);
                 var URL=global.getAPIurl()+'/v1/statistics/articleReadNum?start='+start+'&end='+end;
                 // eslint-disable-next-line no-unused-vars
-                console.log(URL);
                 var that=this;
                 // eslint-disable-next-line no-unused-vars
                 axios.get(URL).then(function (res) {
@@ -392,12 +381,51 @@
                     return 1;
                 }
                 return 0;
+            },
+            getHighAlarmArticles:function () {
+
+                var URL=global.getAPIurl()+'/v1/statistics/articles/reported-articles-list';
+                // eslint-disable-next-line no-unused-vars
+                var that=this;
+                axios.get(URL).then(function (res) {
+                        console.log(res.data);
+                        for (var index in res.data){
+                            var item={
+                                num: res.data[index]['num'],
+                                aid: res.data[index]['aid'],
+                                name:res.data[index]['aid'],
+                                uid:res.data[index]['aid']
+                            };
+                            that.articlesNames.push(item);
+                            that.getArticleInfo(index,res.data[index]['aid']);
+                        }
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                })
+
+            },
+            getArticleInfo:function (index,id) {
+
+                var URL=global.getAPIurl()+'/v1/article'+'?aid='+id+'&uid=5001';
+                // eslint-disable-next-line no-unused-vars
+                var that=this;
+                axios.get(URL).then(function (res) {
+                        that.articlesNames[index]['name']=res.data['title'];
+                        that.articlesNames[index]['aid']=res.data['uid'];
+
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                })
+
             }
         },
         mounted() {
             this.getNumberOfAllKindsOfArticles();
             this.getNumberOfNewArticles();
             this.getReadingQuantity();
+            this.getHighAlarmArticles();
         }
     }
 </script>

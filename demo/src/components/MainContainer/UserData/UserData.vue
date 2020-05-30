@@ -57,7 +57,7 @@
                 margin-top: 0;
                 margin-bottom: 15px;
                 padding-top: 30px;
-                padding-left: 50px;
+                padding-left: 40px;
                 color: #000000;
                 font-size: 18px;
                 font-weight: 600;">
@@ -408,7 +408,7 @@
                     list.push(this.activeUserTop[i3]);
                 }
                 this.activeUserTop=list;
-            }
+            },
         },
         mounted() {
             this.getSexRatio();
@@ -425,7 +425,7 @@
     overflow: hidden;
 }
 #userActiveScale{
-    width: 20%;
+    width: 21%;
     height: 45%;
     margin-left: 1%;
     margin-top: 1%;
@@ -468,7 +468,7 @@
     float: left;
 }
  #userLivenessRank{
-    width: 21%;
+    width: 22%;
     height: 45%;
     margin-left: 1%;
     margin-top: 1%;

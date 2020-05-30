@@ -1,18 +1,22 @@
 <template>
     <div id="articleDataCard">
         <happy-scroll hide-vertical hide-horizontal color="rgba(0,0,0,0.5)" style="height: 90%;width: 100%">
-            <div style="width: 90%;"
-                 v-for="(item,index) in this.articalName"
-                 :key="index">
-                <p style="color: #000000;
-                margin-top: 25px;
-                margin-left: 5px;
-                font-size: 16px;
-                text-align: left">
-                    {{item}}
-                </p>
-
-            </div>
+                <el-table
+                            show-header=false
+                            :data="articalName"
+                            style="width: 100%;">
+                        <el-table-column
+                                style="margin-left: 50px!important;"
+                                prop="name"
+                                label="文章名"
+                                width="230">
+                        </el-table-column>
+                    <el-table-column label="操作">
+                        <el-button
+                            size="mini"
+                            @click="readArticle(scope.$index, scope.row)">查看</el-button>
+                        </el-table-column>
+                    </el-table>
         </happy-scroll>
     </div>
 </template>
