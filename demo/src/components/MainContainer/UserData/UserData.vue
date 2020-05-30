@@ -344,8 +344,8 @@
                 var that=this;
                 axios.get(URL).then(function (res) {
                         var list=[
-                            {name: '活跃用户',value:that.numberOfAllUsers*res.data},
-                            {name: '非活跃用户',value: that.numberOfAllUsers*(1-res.data)}
+                            {name: '活跃用户',value:Math.round(that.numberOfAllUsers*res.data)},
+                            {name: '非活跃用户',value: Math.round(that.numberOfAllUsers*(1-res.data))}
                         ];
                         that.option.series[0].data=list;
                         that.chart = that.$echarts.init(document.getElementById('piegraph'));
