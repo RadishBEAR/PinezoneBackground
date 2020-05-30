@@ -37,13 +37,9 @@
                 <linegraph :id="'linegraph'" :data="option3" style="height:350px"></linegraph>
             </div>
             <div id="activeTimeData">
+                <p style="text-align: left;font-weight: 600;font-size: 18px;margin-left: 10%">统计数据</p>
                 <UserDataCard
-                    weeklyPageView="573"
-                    monthlyPageView="2653"
-                    weeklyRegistNum="53"
-                    totalRegistNum="1583"
-                    weeklyActiveNum="87"
-                    monthlyActiveNum="98"
+                    :statistics="statistics"
                 ></UserDataCard>
             </div>
         </div>
@@ -309,9 +305,30 @@
                         }
                     }
                 },
-                activeUserTop:[
-                ],
-                numberOfAllUsers:0
+                activeUserTop:[],
+                numberOfAllUsers:0,
+                statistics:[
+                    {
+                        title:'用户总数',
+                        value:'57'
+                    },
+                    {
+                      title:'活跃用户占比',
+                      value:'46%'
+                    },
+                    {
+                        title:'今日活跃度',
+                        value:'157'
+                    },
+                    {
+                        title:'昨日活跃度',
+                        value:'143'
+                    },
+                    {
+                        title:'活跃度趋势',
+                        value:'+0.23%'
+                    }
+                ]
         }
     },
         components:{
