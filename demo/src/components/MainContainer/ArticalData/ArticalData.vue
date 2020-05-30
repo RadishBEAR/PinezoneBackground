@@ -1,11 +1,11 @@
 <template>
     <div id="articalData">
         <div id="diaryReadingNum">
-                <linegraph :id="'linegraph1'" :data="option" style="height:350px;"></linegraph>
+            <linegraph id="linegraph1" :data="option" style="height:350px;"></linegraph>
         </div>
         <div id="articalScale">
             <p
-                style="text-align: left;
+                    style="text-align: left;
                 margin-top: 0;
                 margin-bottom: 15px;
                 padding-top: 30px;
@@ -20,11 +20,11 @@
             </div>
         </div>
         <div id="diaryArticalNum">
-                <linegraph id="linegraph2" :data="option2" style="height:350px"></linegraph>
+            <linegraph id="linegraph2" :data="option2" style="height:350px"></linegraph>
         </div>
         <div id="highReportArtical">
             <p
-                style="text-align: left;
+                    style="text-align: left;
                 margin-top: 0;
                 margin-bottom: 15px;
                 padding-top: 30px;
@@ -50,238 +50,212 @@
         name: "ArticalData",
         data(){
             return{
-            option:{
-                tooltip: {
-                    show: true ,
-                    trigger: "axis",
-                    axisPointer: {
-                        type: "shadow",   //提示框类型
-                        label: {       //坐标轴指示器的文本标签
-                            show: true
+                option:{
+                    tooltip: {
+                        show: true ,
+                        trigger: "axis",
+                        axisPointer: {
+                            type: "shadow",   //提示框类型
+                            label: {       //坐标轴指示器的文本标签
+                                show: true
+                            }
                         }
-                    }
-                },
-                title: {
-                    text: '每日阅读量',
-                    left: '40px',
-                    textStyle: {
-                        fontSize: 18,
-                        align: 'center',
-                        lineHeight: 70
-                    }
-                },
-                xAxis: {
-                    boundaryGap: false,
-                    axisTick:{
-                        show:false
                     },
-                    type: 'category',
-                    name: '日期',
-                    nameTextStyle: {
-                        color: '#A1A1A1',
-                        fontSize: 17
-                    },
-                    axisLabel: {
-                        show: true,
+                    title: {
+                        text: '每日阅读量',
+                        left: '40px',
                         textStyle: {
+                            fontSize: 18,
+                            align: 'center',
+                            lineHeight: 70
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        name: '日期',
+                        data: [],
+                        nameTextStyle: {
                             color: '#A1A1A1',
-                            // fontSize: '38',//字体大小
+                            fontSize: 17
                         },
-                        fontSize: 12,//字体大小
-                    },
-                    axisLine: {       //坐标轴轴线
-                        lineStyle: {           //坐标轴轴线颜色
-                        color: '#A1A1A1'
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: '#A1A1A1',
+                                // fontSize: '38',//字体大小
+                            },
+                            fontSize: 12,//字体大小
                         }
                     },
-                    data: ['5.1', '5.2', '5.3', '5.4', '5.5', '5.6', '5.7'],
-                    splitLine:{
-                        show:true,
-                        lineStyle:{
-                            color:'#A1A1A1',
-                            opacity:0.1
-                        }
-                    }
-                },
-                yAxis: {
-                    type: 'value',
-                    name: '数量',
-                    nameTextStyle: {
-                        color: '#A1A1A1',
-                        fontSize: 17
-                    },
-                    splitLine:{
-                        show:false
-                    },
-                    axisLabel: {
-                        show: true,
-                        textStyle: {
+                    yAxis: {
+                        name: '数量',
+                        type: 'value',
+                        nameTextStyle: {
                             color: '#A1A1A1',
-                            // fontSize: '38',//字体大小
+                            fontSize: 17
                         },
-                        fontSize: 12,//字体大小
-                    },
-                    axisLine: {       //坐标轴轴线
-                        lineStyle: {           //坐标轴轴线颜色
-                        color: '#A1A1A1'
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: '#A1A1A1',
+                            },
+                            fontSize: 12,//字体大小
                         }
-                    }
-                },
-                grid: {
-                    top: '25%',
-                    left: '5%',
-                    right: '10%',
-                    bottom: '5%',
-                    containLabel: true
-                },
-                series: {
-                    data: [600, 700, 300, 400, 1300, 1000, 1600],
-                    type: 'line',
-                    barWidth:30,
-                    lineStyle: {
-                        normal: {
-                            width: 2,
-                            color: {
-                                type: 'linear',
-                                colorStops: [{
-                                    offset: 0,
-                                    color: '#ff9a76'
-                                },{
-                                    offset: 1,
-                                    color: '#f96d80'
-                                }],
-                                globalCoord:false
+                    },
+                    grid: {
+                        top: '25%',
+                        left: '5%',
+                        right: '10%',
+                        bottom: '5%',
+                        containLabel: true
+                    },
+                    series: {
+                        data: [],
+                        type: 'line',
+                        smooth: true,  //true 为平滑曲线，false为直线
+                        lineStyle: {
+                            normal: {
+                                width: 2,
+                                color: {
+                                    type: 'linear',
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: '#ff847c'
+                                    },{
+                                        offset: 1,
+                                        color: '#e84a5f'
+                                    }],
+                                    globalCoord:false
+                                }
                             }
                         }
                     }
-                }
-            },
-            option2:{
-                tooltip: {
-                    show: true ,
-                    trigger: "axis",
-                    axisPointer: {
-                        type: "shadow",   //提示框类型
-                        label: {       //坐标轴指示器的文本标签
-                            show: true
+                },
+                option2:{
+                    tooltip: {
+                        show: true ,
+                        trigger: "axis",
+                        axisPointer: {
+                            type: "shadow",   //提示框类型
+                            label: {       //坐标轴指示器的文本标签
+                                show: true
+                            }
                         }
-                    }
-                },
-                title: {
-                    text: '每日新增文章',
-                    left: '40px',
-                    textStyle: {
-                        fontSize: 18,
-                        align: 'center',
-                        lineHeight: 70
-                    }
-                },
-                xAxis: {
-                    type: 'category',
-                    name: '日期',
-                    data: [],
-                    nameTextStyle: {
-                        color: '#A1A1A1',
-                        fontSize: 17
                     },
-                    axisLabel: {
-                        show: true,
+                    title: {
+                        text: '每日新增文章',
+                        left: '40px',
                         textStyle: {
-                            color: '#A1A1A1',
-                            // fontSize: '38',//字体大小
-                        },
-                        fontSize: 12,//字体大小
-                    }
-                },
-                yAxis: {
-                    name: '数量',
-                    type: 'value',
-                    nameTextStyle: {
-                        color: '#A1A1A1',
-                        fontSize: 17
+                            fontSize: 18,
+                            align: 'center',
+                            lineHeight: 70
+                        }
                     },
-                    axisLabel: {
-                        show: true,
-                        textStyle: {
+                    xAxis: {
+                        type: 'category',
+                        name: '日期',
+                        data: [],
+                        nameTextStyle: {
                             color: '#A1A1A1',
+                            fontSize: 17
                         },
-                        fontSize: 12,//字体大小
-                    }
-                },
-                grid: {
-                    top: '25%',
-                    left: '5%',
-                    right: '10%',
-                    bottom: '5%',
-                    containLabel: true
-                },
-                series: {
-                    data: [],
-                    type: 'line',
-                    smooth: true,  //true 为平滑曲线，false为直线
-                    lineStyle: {
-                        normal: {
-                            width: 2,
-                            color: {
-                                type: 'linear',
-                                colorStops: [{
-                                    offset: 0,
-                                    color: '#6886c5'
-                                },{
-                                    offset: 1,
-                                    color: '#0000EE'
-                                }],
-                                globalCoord:false
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: '#A1A1A1',
+                                // fontSize: '38',//字体大小
+                            },
+                            fontSize: 12,//字体大小
+                        }
+                    },
+                    yAxis: {
+                        name: '数量',
+                        type: 'value',
+                        nameTextStyle: {
+                            color: '#A1A1A1',
+                            fontSize: 17
+                        },
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: '#A1A1A1',
+                            },
+                            fontSize: 12,//字体大小
+                        }
+                    },
+                    grid: {
+                        top: '25%',
+                        left: '5%',
+                        right: '10%',
+                        bottom: '5%',
+                        containLabel: true
+                    },
+                    series: {
+                        data: [],
+                        type: 'line',
+                        smooth: true,  //true 为平滑曲线，false为直线
+                        lineStyle: {
+                            normal: {
+                                width: 2,
+                                color: {
+                                    type: 'linear',
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: '#6886c5'
+                                    },{
+                                        offset: 1,
+                                        color: '#0000EE'
+                                    }],
+                                    globalCoord:false
+                                }
                             }
                         }
                     }
-                }
-            },
-            option3:{
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{a} <br/>{b}: {c} ({d}%)'
                 },
-                legend: {
-                    orient: 'vertical',
-                    top:'50%',
-                    x: 'left',
-                    left : '20px',
-                    data: ['食堂',  '玩吧', '探店', '自习室','健身房']
-                },
-                series: [
-                    {
-
-                        name: '占比',
-                        type: 'pie',
-                        radius: ['50%', '70%'],
-                        avoidLabelOverlap: false,
-                        label: {
-                            show: false,
-                            position: 'center'
-                        },
-                        emphasis: {
+                option3:{
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b}: {c} ({d}%)'
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        top:'50%',
+                        x: 'left',
+                        left : '20px',
+                        data: ['食堂',  '玩吧', '探店', '自习室','健身房']
+                    },
+                    series: [
+                        {
+                            name: '占比',
+                            type: 'pie',
+                            radius: ['50%', '70%'],
+                            avoidLabelOverlap: false,
                             label: {
-                                show: true,
-                                fontSize: '25',
-                                fontWeight: 'bold'
-                            }
-                        },
-                        labelLine: {
-                            show: false
-                        },
-                        data: [
-                            {value: 335, name: '食堂'},
-                            {value: 310, name: '运动'},
-                            {value: 234, name: '玩吧'},
-                            {value: 135, name: '自习室'},
-                            {value: 300, name: '探店'}
-                        ],
-                        color: ['#37a2da','#71f6f9','#ffdb5c','#ff9f7f','#e062ae'],
-                    }
-                ]
-            },
-            articlesNames:[
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    fontSize: '25',
+                                    fontWeight: 'bold'
+                                }
+                            },
+                            labelLine: {
+                                show: false
+                            },
+                            data: [
+                                {value: 335, name: '食堂'},
+                                {value: 310, name: '运动'},
+                                {value: 234, name: '玩吧'},
+                                {value: 135, name: '自习室'},
+                                {value: 300, name: '探店'}
+                            ],
+                            color: ['#37a2da','#71f6f9','#ffdb5c','#ff9f7f','#e062ae'],
+                        }
+                    ]
+                },
+                articlesNames:[
                     "震惊！福大食堂后厨竟有如此惊天大秘密！",
                     "生泪控诉学生街XXX店之卑劣营销",
                     "童叟无欺！不花钱还赚钱的夹娃娃店！",
@@ -289,12 +263,12 @@
                     "喝了这杯奶茶，我哭了3天",
                     "我一开始也不信XX的奶茶能减肥"
                 ]
-        }
-    },
-    components:{
-        linegraph,
-        ArticalDataCard
-    },
+            }
+        },
+        components:{
+            linegraph,
+            ArticalDataCard
+        },
         methods:{
             getNumberOfAllKindsOfArticles(){
                 var URL=global.getAPIurl()+'/v1/statistics/articles/proportion';
@@ -331,40 +305,64 @@
                 var that=this;
                 // eslint-disable-next-line no-unused-vars
                 axios.get(URL).then(function (res) {
-                    var begin=0;
-                    var index=res.data.length-1;
-                    var ListOfDate=[];
-                    var ListOfData=[];
-                       while(begin<=daysToShow){
-                           var myDate=that.dateCalculation(date,-1*begin);
-                           // eslint-disable-next-line no-constant-condition
-                           while(index>=0){
-                               console.log(myDate,res.data[index]['date']);
-                               if(myDate==res.data[index]['date']){
-                                   ListOfDate.push(res.data[index]['num']);
-                                   break;
-                               }
-                               if(that.dateJudge(myDate,res.data[index]['date'])===1){
-                                   index--;
-                               }
-                               else if(that.dateJudge(myDate,res.data[index]['date'])===0){
-                                   ListOfDate.push(0);
-                                   break;
-                               }
-                           }
-                           ListOfData.push(myDate);
-                           begin++;
-                       }
-                       console.log(ListOfDate,ListOfData);
-                    index=ListOfDate.length-1;
-                    while (index>=0)
-                    {
-                        that.option2.series.data.push(ListOfDate[index]);
-                        that.option2.xAxis.data.push(ListOfData[index]);
-                        index--;
+                        var begin=0;
+                        var index=res.data.length-1;
+                        var ListOfDate=[];
+                        var ListOfData=[];
+                        while(begin<=daysToShow){
+                            var myDate=that.dateCalculation(date,-1*begin);
+                            // eslint-disable-next-line no-constant-condition
+                            while(index>=0){
+                                console.log(myDate,res.data[index]['date']);
+                                if(myDate==res.data[index]['date']){
+                                    ListOfDate.push(res.data[index]['num']);
+                                    break;
+                                }
+                                if(that.dateJudge(myDate,res.data[index]['date'])===1){
+                                    index--;
+                                }
+                                else if(that.dateJudge(myDate,res.data[index]['date'])===0){
+                                    ListOfDate.push(0);
+                                    break;
+                                }
+                            }
+                            ListOfData.push(myDate);
+                            begin++;
+                        }
+                        console.log(ListOfDate,ListOfData);
+                        index=ListOfDate.length-1;
+                        while (index>=0)
+                        {
+                            that.option2.series.data.push(ListOfDate[index]);
+                            that.option2.xAxis.data.push(ListOfData[index]);
+                            index--;
+                        }
+                        that.chart = that.$echarts.init(document.getElementById('linegraph2'));
+                        that.chart.setOption(that.option2);
                     }
-                    that.chart = that.$echarts.init(document.getElementById('linegraph2'));
-                    that.chart.setOption(that.option2);
+                ).catch(function (error) {
+                    console.log(error)
+                })
+            },
+            getReadingQuantity:function () {
+                let yy = new Date().getFullYear();
+                let mm = new Date().getMonth() + 1;
+                let dd = new Date().getDate();
+                var end=yy + "-" + mm + "-" + dd;
+                var daysToShow=15; // 显示多久
+                var start=this.dateCalculation(end,-1*daysToShow);
+                var URL=global.getAPIurl()+'/v1/statistics/articleReadNum?start='+start+'&end='+end;
+                // eslint-disable-next-line no-unused-vars
+                console.log(URL);
+                var that=this;
+                // eslint-disable-next-line no-unused-vars
+                axios.get(URL).then(function (res) {
+                        for (var index in res.data){
+                            that.option.series.data.push(res.data[index]['num']);
+                            that.option.xAxis.data.push(res.data[index]['date']);
+                        }
+                        that.chart = that.$echarts.init(document.getElementById('linegraph1'));
+                        that.chart.setOption(that.option);
                     }
                 ).catch(function (error) {
                     console.log(error)
@@ -399,54 +397,50 @@
         mounted() {
             this.getNumberOfAllKindsOfArticles();
             this.getNumberOfNewArticles();
+            this.getReadingQuantity();
         }
     }
 </script>
 
 <style scoped>
-#articalData{
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-#articalData>>>happy-scroll-content{
-    display:block!important;
-}
-        #diaryReadingNum{
-            width: 75%;
-            height: 45%;
-            margin-left: 1%;
-            margin-top: 1%;
-            float: left;
-            box-shadow: 1px 1px 3px #888888;
-        }
-
-        #diaryArticalNum{
-            width: 75%;
-            height: 45%;
-            margin-left: 1%;
-            margin-top: 1%;
-            float: left;
-            box-shadow: 1px 1px 3px #888888;
-        }
-
-        #articalScale{
-
-            width: 22%;
-            height: 45%;
-            margin-left: 1%;
-            margin-top: 1%;
-            box-shadow: 1px 1px 3px #888888;
-            float: left;
-        }
-        #highReportArtical{
-            width: 22%;
-            height: 45%;
-            margin-left: 1%;
-            margin-top: 1%;
-            box-shadow: 1px 1px 3px #888888;
-            float: left;
-        }
-
-
+    #articalData{
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    #articalData>>>happy-scroll-content{
+        display:block!important;
+    }
+    #diaryReadingNum{
+        width: 75%;
+        height: 45%;
+        margin-left: 1%;
+        margin-top: 1%;
+        float: left;
+        box-shadow: 1px 1px 3px #888888;
+    }
+    #diaryArticalNum{
+        width: 75%;
+        height: 45%;
+        margin-left: 1%;
+        margin-top: 1%;
+        float: left;
+        box-shadow: 1px 1px 3px #888888;
+    }
+    #articalScale{
+        width: 22%;
+        height: 45%;
+        margin-left: 1%;
+        margin-top: 1%;
+        box-shadow: 1px 1px 3px #888888;
+        float: left;
+    }
+    #highReportArtical{
+        width: 22%;
+        height: 45%;
+        margin-left: 1%;
+        margin-top: 1%;
+        box-shadow: 1px 1px 3px #888888;
+        float: left;
+    }
 </style>

@@ -270,7 +270,7 @@
             },
             getArticle:function (id) {
                 var that=this;
-                var URL=global.getAPIurl()+'/v1/article'+'?aid='+id+'&uid=221701231';
+                var URL=global.getAPIurl()+'/v1/article'+'?aid='+id+'&uid=5001';
 
                 axios.get(URL).then(function(res) {
                     that.res=res.data;  // 这就是api返回的结果了
