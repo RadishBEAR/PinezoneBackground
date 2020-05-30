@@ -397,7 +397,10 @@
                                 uid:res.data[index]['aid']
                             };
                             that.articlesNames.push(item);
-                            that.getArticleInfo(index,res.data[index]['aid']);
+                        }
+                        that.sort();
+                        for (var index2 in that.articlesNames){
+                            that.getArticleInfo(index2,that.articlesNames[index2]['aid']);
                         }
                     }
                 ).catch(function (error) {
@@ -412,13 +415,32 @@
                 var that=this;
                 axios.get(URL).then(function (res) {
                         that.articlesNames[index]['name']=res.data['title'];
-                        that.articlesNames[index]['aid']=res.data['uid'];
-
+                        that.articlesNames[index]['uid']=res.data['uid'];
                     }
                 ).catch(function (error) {
                     console.log(error)
                 })
-
+            },
+            sort:function () {
+                // 是简单排序算法
+                for (var i0=0;i0<this.articlesNames.length;i0++){
+                    for (var i1=i0;i1<this.articlesNames.length;i1++){
+                        if(parseInt(this.articlesNames[i0]['num']) < parseInt(this.articlesNames[i1]['num'])){
+                            let item=this.articlesNames[i0];
+                            this.articlesNames[i0]=this.articlesNames[i1];
+                            this.articlesNames[i1]=item;
+                        }
+                    }
+                }
+                var list=[];
+                var key=9;
+                if (list.length<key){
+                    key=this.articlesNames.length;
+                }
+                for (var i3=0;i3<key;i3++){
+                    list.push(this.articlesNames[i3]);
+                }
+                this.articlesNames=list;
             }
         },
         mounted() {

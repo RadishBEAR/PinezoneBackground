@@ -30,7 +30,7 @@
         data(){
             return{
                 accordion:false, // 这是手风琴开关，设为true能打开手风琴模式
-                activeNames: ['1','2','3'],
+                activeNames: [0,1,2],
                 functionModuleNames:[
                     {
                         mainModuleName:'系统操作',

@@ -366,7 +366,6 @@
                             var item={
                                 uid:res.data[index]['uid'],
                                 name:res.data[index]['uid'],
-                                leastArtical:res.data[index]['uid'],
                                 active: res.data[index]['active']
                             };
                             that.activeUserTop.push(item);

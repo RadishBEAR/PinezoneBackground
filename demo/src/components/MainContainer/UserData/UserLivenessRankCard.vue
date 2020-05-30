@@ -12,9 +12,11 @@
                     width="230">
             </el-table-column>
             <el-table-column label="操作">
-                <el-button
-                        size="mini"
-                        @click="readArticle(scope.$index, scope.row)">查看</el-button>
+                <template slot-scope="scope">
+                    <el-button
+                            size="mini"
+                            @click="readArticle(scope.$index)">查看</el-button>
+                </template>
             </el-table-column>
         </el-table>
         </happy-scroll>
@@ -22,10 +24,20 @@
 </template>
 
 <script>
+    import global from '../../../tools/global'
+    import { EventBus } from '../../../tools/EventBus'
     export default {
         name: "UserLivenessRankCard",
         props:{
             activeUserTop: Array
+        },
+        methods:{
+            readArticle:function (index) {
+                global.setArticleID(-1);
+                // Vue.prototype.$AuthorID=row.userID;
+                global.setAuthorID(this.activeUserTop[index]['uid']);
+                EventBus.$emit('ReadArticle',this.activeUserTop[index]['uid']);
+            },
         }
     }
 </script>>

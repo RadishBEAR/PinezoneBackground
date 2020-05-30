@@ -2,7 +2,6 @@
     <div id="articleDataCard">
         <happy-scroll hide-vertical hide-horizontal color="rgba(0,0,0,0.5)" style="height: 90%;width: 100%">
                 <el-table
-                            show-header=false
                             :data="articalName"
                             style="width: 100%;">
                         <el-table-column
@@ -12,20 +11,31 @@
                                 width="230">
                         </el-table-column>
                     <el-table-column label="操作">
-                        <el-button
-                            size="mini"
-                            @click="readArticle(scope.$index, scope.row)">查看</el-button>
-                        </el-table-column>
+                        <template slot-scope="scope">
+                            <el-button
+                                size="mini"
+                                @click="readArticle(scope.$index)">查看</el-button>
+                        </template>
+                    </el-table-column>
                     </el-table>
         </happy-scroll>
     </div>
 </template>
 
 <script>
+    import { EventBus } from '../../../tools/EventBus'
+    import global from '../../../tools/global'
     export default {
         name: "ArticalDataCard",
         props:{
             articalName: Array,
+        },
+        methods:{
+            readArticle:function (index) {
+                global.setArticleID(this.articalName[index]['aid']);
+                global.setAuthorID(this.articalName[index]['uid']);
+                EventBus.$emit('ReadArticle',this.articalName[index]['aid'])
+            },
         }
     }
 </script>>
