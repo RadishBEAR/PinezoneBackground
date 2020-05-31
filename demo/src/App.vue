@@ -20,6 +20,17 @@
         </el-main>
       </el-container>
     </el-container>
+    <el-drawer
+            direction="ltr"
+            :show-close="false"
+            :visible.sync="drawer"
+            size="480px">
+      <div style="width: 100%;height: 100%">
+        <daily>
+
+        </daily>
+      </div>
+    </el-drawer>
   </div>
 </template>
 
@@ -27,6 +38,7 @@
 import HelloWorld from './components/HelloWorld.vue'
 import TopNavigation from './components/TopNavigation/TopNavigation'
 import SideNavigation from './components/SideNavigation/SideNavigation'
+import daily from './components/MainContainer/Daily/daily'
 import { EventBus } from './tools/EventBus'
 
 export default {
@@ -35,7 +47,13 @@ export default {
     // eslint-disable-next-line vue/no-unused-components
     HelloWorld,
     TopNavigation,
-    SideNavigation
+    SideNavigation,
+    daily
+  },
+  data(){
+    return{
+      drawer:false
+    }
   },
   mounted() {
     EventBus.$on('selectFunctionModule',(msg)=>{
@@ -59,8 +77,11 @@ export default {
         case '用户数据':
           this.$router.push('/UserData');
           break;
+        case '松果日报':
+          this.drawer = true;
+          break;
       }
-    })
+    });
     EventBus.$on('ReadArticle',(msg)=>{
       this.$router.push('/Article');
       console.log(msg);
@@ -81,5 +102,11 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
+}
+.el-drawer{
+    background-color: #fcfafa!important;
+  }
+.el-drawer__header{
+  margin-bottom: 0px!important;
 }
 </style>

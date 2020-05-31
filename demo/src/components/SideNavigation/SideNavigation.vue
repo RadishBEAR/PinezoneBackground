@@ -30,7 +30,7 @@
         data(){
             return{
                 accordion:false, // 这是手风琴开关，设为true能打开手风琴模式
-                activeNames: [0,1,2],
+                activeNames: [0,1,2,3],
                 functionModuleNames:[
                     {
                         mainModuleName:'系统操作',
@@ -43,6 +43,10 @@
                     {
                         mainModuleName:'信息列表',
                         subFunctionModule:['用户列表','文章列表']
+                    },
+                    {
+                        mainModuleName:'统计信息',
+                        subFunctionModule:['松果日报']
                     }
                 ]
             }

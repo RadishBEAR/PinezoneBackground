@@ -195,7 +195,7 @@
                         barWidth: '50%',
                         itemStyle:{
                             normal: {
-                                color: '#5CACEE'
+                                color: '#4d80e4'
                             }
                         }
 
