@@ -343,6 +343,7 @@
                 var that=this;
                 axios.get(URL).then(function (res) {
                     that.numberOfAllUsers=res.data[0]['num']+res.data[1]['num'];
+                    that.statistics[0]['value']=that.numberOfAllUsers;
                     var item=[
                         {value:res.data[1]['num'],name:res.data[1]['sex']},
                         {value:res.data[0]['num'],name:res.data[0]['sex']}
@@ -360,6 +361,7 @@
                 // global.getAPIurl()返回的是服务器的地址，加上接口后缀就是完整的接口地址了
                 var that=this;
                 axios.get(URL).then(function (res) {
+                    that.statistics[1]['value']=res.data*100+'%';
                         var list=[
                             {name: '活跃用户',value:Math.round(that.numberOfAllUsers*res.data)},
                             {name: '非活跃用户',value: Math.round(that.numberOfAllUsers*(1-res.data))}
