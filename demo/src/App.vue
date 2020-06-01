@@ -26,9 +26,7 @@
             :visible.sync="drawer"
             size="480px">
       <div style="width: 100%;height: 100%">
-        <daily>
-
-        </daily>
+        <daily></daily>
       </div>
     </el-drawer>
   </div>
@@ -108,5 +106,6 @@ export default {
   }
 .el-drawer__header{
   margin-bottom: 0px!important;
+  padding-top: 0px!important;
 }
 </style>

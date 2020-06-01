@@ -296,7 +296,9 @@
                 // eslint-disable-next-line no-unused-vars
                 var that=this;
                 // eslint-disable-next-line no-unused-vars
+                console.log(that.dateJudge('2020-6-1','2020-5-31'));
                 axios.get(URL).then(function (res) {
+                    console.log(res.data);
                         var begin=0;
                         var index=res.data.length-1;
                         var ListOfDate=[];
@@ -304,7 +306,12 @@
                         while(begin<=daysToShow){
                             var myDate=that.dateCalculation(date,-1*begin);
                             // eslint-disable-next-line no-constant-condition
-                            while(index>=0){
+                            while(true){
+                                if(index===-1){
+                                    ListOfDate.push(0);
+                                    break;
+                                }
+                                console.log(myDate,res.data[index]['date']);
                                 if(myDate==res.data[index]['date']){
                                     ListOfDate.push(res.data[index]['num']);
                                     break;
@@ -320,6 +327,7 @@
                             ListOfData.push(myDate);
                             begin++;
                         }
+                        console.log(ListOfDate,ListOfData);
                         index=ListOfDate.length-1;
                         while (index>=0)
                         {
@@ -332,7 +340,7 @@
                     }
                 ).catch(function (error) {
                     console.log(error)
-                })
+                });
             },
             getReadingQuantity:function () {
                 let yy = new Date().getFullYear();
@@ -362,10 +370,14 @@
                 var d=new Date(date);
                 d.setDate(d.getDate()+days);
                 var m=d.getMonth()+1;
+                var dd = d.getDate();
                 if(m<10){
                     m='0'+m;
                 }
-                return d.getFullYear()+'-'+m+'-'+d.getDate();
+                if(dd<10){
+                    dd='0'+dd;
+                }
+                return d.getFullYear()+'-'+m+'-'+dd;
             },
             dateJudge:function (date0,date1) {
                 // date0=2020.5.1，date1=2020.5.19，返回1
@@ -374,10 +386,10 @@
                 if(d0.getFullYear()<d1.getFullYear()){
                     return 1;
                 }
-                if(d0.getMonth()<d1.getMonth()){
+                if((d0.getMonth()<d1.getMonth())&&(d0.getFullYear()==d1.getFullYear())){
                     return 1;
                 }
-                if(d0.getDate()<d1.getDate()){
+                else if(d0.getDate()<d1.getDate()&&(d0.getMonth()==d1.getMonth())&&(d0.getFullYear()==d1.getFullYear())){
                     return 1;
                 }
                 return 0;

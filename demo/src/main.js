@@ -15,6 +15,9 @@ import 'vue-happy-scroll/docs/happy-scroll.css'
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 
+import VueContextMenu from 'vue-contextmenu'
+Vue.use(VueContextMenu);
+
 import routers from '../src/router/router.js'
 import Router from "vue-router"; // 路由
 
