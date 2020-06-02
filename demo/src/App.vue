@@ -50,18 +50,20 @@ export default {
   },
   methods:{
     getResolution:function () {
-      var width=document.body.clientWidth;
-      alert(width);
-      if(width==1568){
+      var width=document.body.clientWidth; 
+      // eslint-disable-next-line no-empty
+      if((width>1600)){
+      }
+      else if((width<1600)&&(width>1500)){
         document.getElementsByTagName('body')[0].style.zoom=0.9;
       }
-      if(width==1408){
+      else if((width<1500)&&(width>1350)){
         document.getElementsByTagName('body')[0].style.zoom=0.75;
       }
-      if(width==1334){
+      else if((width<1350)&&(width>1270)){
         document.getElementsByTagName('body')[0].style.zoom=0.67;
       }
-      if(width==1248){
+      else{
         document.getElementsByTagName('body')[0].style.zoom=0.67;
       }
     }
