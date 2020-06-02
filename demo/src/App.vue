@@ -48,12 +48,31 @@ export default {
     SideNavigation,
     daily
   },
+  methods:{
+    getResolution:function () {
+      var width=document.body.clientWidth;
+      alert(width);
+      if(width==1568){
+        document.getElementsByTagName('body')[0].style.zoom=0.9;
+      }
+      if(width==1408){
+        document.getElementsByTagName('body')[0].style.zoom=0.75;
+      }
+      if(width==1334){
+        document.getElementsByTagName('body')[0].style.zoom=0.67;
+      }
+      if(width==1248){
+        document.getElementsByTagName('body')[0].style.zoom=0.67;
+      }
+    }
+  },
   data(){
     return{
       drawer:false
     }
   },
   mounted() {
+    this.getResolution();
     EventBus.$on('selectFunctionModule',(msg)=>{
       console.log("点击"+msg+"模块");
       switch (msg) {

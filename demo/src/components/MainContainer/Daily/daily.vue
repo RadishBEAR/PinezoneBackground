@@ -68,7 +68,7 @@
                 <div class="itemBlock leftBlock">
                         <img src="../../../assets/星星.png" style="width: 80px;height: 80px;margin-left: auto">
                         <p style="padding-top: 0px;margin-top: 0px;margin-bottom: 0px">用户活跃度</p>
-                        <p style="padding-top: 0px;margin-top: 0px">· 5 ·</p>
+                        <p style="padding-top: 0px;margin-top: 0px">· 35 ·</p>
                 </div>
                 <div class="itemBlock rightBlock">
                         <img src="../../../assets/月球.png" style="width: 80px;height: 80px;margin-left: auto">

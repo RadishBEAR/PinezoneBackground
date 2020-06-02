@@ -8,12 +8,11 @@
             <el-table-column
                     prop="title"
                     label="表项"
-                    width="180">
+                    width="130%">
             </el-table-column>
             <el-table-column
                     prop="value"
-                    label="数值"
-                    width="80">
+                    label="数值">
             </el-table-column>
         </el-table>
 

@@ -8,7 +8,7 @@
                                 style="margin-left: 50px!important;"
                                 prop="name"
                                 label="文章名"
-                                width="230">
+                                width="200%">
                         </el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
