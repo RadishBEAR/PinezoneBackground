@@ -34,7 +34,7 @@
         </div>
         <div id="userActiveTime">
             <div id="activeTimeGraph">
-                <linegraph :id="'linegraph'" :data="option3" style="height:350px"></linegraph>
+                <linegraph id="linegrap" :data="option3" style="height:350px"></linegraph>
             </div>
             <div id="activeTimeData">
                 <p style="text-align: left;font-weight: 600;font-size: 18px;margin-left: 10%">统计数据</p>
@@ -183,14 +183,14 @@
                     xAxis: {
                         type: 'category',
                         name: '时间段',
-                        data: ['0~4', '5~8', '9~12', '13~16', '17~20', '21~24']
+                        data: []
                     },
                     yAxis: {
                         type: 'value',
                         name: '数量'
                     },
                     series: [{
-                        data: [120, 200, 150, 80, 70, 110],
+                        data: [],
                         type: 'bar',
                         barWidth: '50%',
                         itemStyle:{
@@ -381,6 +381,7 @@
                 // eslint-disable-next-line no-unused-vars
                 var numberToShow=9;
                 axios.get(URL).then(function (res) {
+                    console.log(res.data);
                         for (var index in res.data){
                             var item={
                                 uid:res.data[index]['uid'],
@@ -410,6 +411,24 @@
                     console.log(error)
                 })
             },
+            getActivePeriod:function(){
+                var URL=global.getAPIurl()+'/v1/statistics/articles/active-period';
+                // eslint-disable-next-line no-unused-vars
+                var that=this;
+                axios.get(URL).then(function (res) {
+                        for (let index in res.data){
+                            var item=res.data[index];
+                            that.option3.xAxis.data.push(index);
+                            that.option3.series[0].data.push(item.activity);
+                        }
+                        that.chart = that.$echarts.init(document.getElementById('linegrap'));
+                        that.chart.setOption(that.option3);
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                })
+            },
+            
             sort:function () {
                 // 是简单排序算法
                 for (var i0=0;i0<this.activeUserTop.length;i0++){
@@ -431,7 +450,8 @@
         mounted() {
             this.getSexRatio();
             this.getUserActivity();
-            this.getActiveUsers();
+            // this.getActiveUsers();
+            this.getActivePeriod();
         }
     }
 </script>

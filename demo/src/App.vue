@@ -50,7 +50,7 @@ export default {
   },
   methods:{
     getResolution:function () {
-      var width=document.body.clientWidth; 
+      var width=document.body.clientWidth;
       // eslint-disable-next-line no-empty
       if((width>1600)){
       }
@@ -104,7 +104,8 @@ export default {
     EventBus.$on('ReadArticle',(msg)=>{
       this.$router.push('/Article');
       console.log(msg);
-    })
+    });
+    this.$router.push('/ArticleData');
   }
 }
 </script>
