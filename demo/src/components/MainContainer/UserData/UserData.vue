@@ -44,7 +44,7 @@
             </div>
         </div>
         <div id="userLiveness">
-            <linegraph :id="'linegraph1'" :data="option4" style="height:350px;"></linegraph>
+            <linegraph id="linegraph1" :data="option4" style="height:350px;"></linegraph>
         </div>
 
         <div id="userLivenessRank">
@@ -252,7 +252,7 @@
                             color: '#A1A1A1'
                             }
                         },
-                        data: ['5.1', '5.2', '5.3', '5.4', '5.5', '5.6', '5.7','5.8','5.9','5.10','5.11','5.12','5.13','5.14','5.15'],
+                        data: [],
                         splitLine:{
                             show:true
 
@@ -284,7 +284,8 @@
                     },
 
                     series: {
-                        data: [18, 20, 25,23,30,35,45,20,18,26,40,45,38,35,30],
+                        data: [],
+                        smooth: true,  //true 为平滑曲线，false为直线
                         type: 'line',
                         barWidth:30,
                         lineStyle: {
@@ -375,7 +376,7 @@
                 })
             },
             getActiveUsers:function () {
-                var URL=global.getAPIurl()+'/v1/statistics/articles/activity';
+                var URL=global.getAPIurl()+'/v1/statistics/articles/user-activity';
                 // eslint-disable-next-line no-unused-vars
                 var that=this;
                 // eslint-disable-next-line no-unused-vars
@@ -428,7 +429,24 @@
                     console.log(error)
                 })
             },
-            
+            getDailyActivity:function(){
+                var URL=global.getAPIurl()+'/v1/statistics/articles/activity';
+                // eslint-disable-next-line no-unused-vars
+                var that=this;
+                axios.get(URL).then(function (res) {
+                        console.log(res.data);
+                        for (let index in res.data){
+                            var item=res.data[index];
+                            that.option4.xAxis.data.push(item.date);
+                            that.option4.series.data.push(item.activity);
+                            that.chart = that.$echarts.init(document.getElementById('linegraph1'));
+                            that.chart.setOption(that.option4);
+                        }
+                    }
+                ).catch(function (error) {
+                    console.log(error)
+                })
+            },
             sort:function () {
                 // 是简单排序算法
                 for (var i0=0;i0<this.activeUserTop.length;i0++){
@@ -450,8 +468,9 @@
         mounted() {
             this.getSexRatio();
             this.getUserActivity();
-            // this.getActiveUsers();
+            this.getActiveUsers();
             this.getActivePeriod();
+            this.getDailyActivity();
         }
     }
 </script>

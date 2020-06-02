@@ -296,9 +296,7 @@
                 // eslint-disable-next-line no-unused-vars
                 var that=this;
                 // eslint-disable-next-line no-unused-vars
-                console.log(that.dateJudge('2020-6-1','2020-5-31'));
                 axios.get(URL).then(function (res) {
-                    console.log(res.data);
                         var begin=0;
                         var index=res.data.length-1;
                         var ListOfDate=[];
@@ -311,7 +309,6 @@
                                     ListOfDate.push(0);
                                     break;
                                 }
-                                console.log(myDate,res.data[index]['date']);
                                 if(myDate==res.data[index]['date']){
                                     ListOfDate.push(res.data[index]['num']);
                                     break;
@@ -327,7 +324,6 @@
                             ListOfData.push(myDate);
                             begin++;
                         }
-                        console.log(ListOfDate,ListOfData);
                         index=ListOfDate.length-1;
                         while (index>=0)
                         {
@@ -400,7 +396,6 @@
                 // eslint-disable-next-line no-unused-vars
                 var that=this;
                 axios.get(URL).then(function (res) {
-                        console.log(res.data);
                         for (var index in res.data){
                             var item={
                                 num: res.data[index]['num'],
