@@ -12,6 +12,9 @@ Vue.component('happy-scroll', HappyScroll)
 // 引入css
 import 'vue-happy-scroll/docs/happy-scroll.css'
 
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies);
+
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 

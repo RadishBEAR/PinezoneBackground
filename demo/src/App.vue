@@ -1,34 +1,42 @@
 <template>
   <div id="app">
-    <el-container style="height: 100%">
 
-      <!--顶部导航-->
-      <el-header style="padding: 0;height: 50px;z-index: 100">
-        <TopNavigation></TopNavigation>
-      </el-header>
+    <div v-if="!this.isLogin">
+      <loginPage></loginPage>
+    </div>
 
+    <div id="mainPage" v-if="this.isLogin">
       <el-container style="height: 100%">
 
-        <!--侧边导航-->
-        <el-aside width="200px" style="height: 100%;" >
-          <SideNavigation></SideNavigation>
-        </el-aside>
+        <!--顶部导航-->
+        <el-header style="padding: 0;height: 50px;z-index: 100">
+          <TopNavigation></TopNavigation>
+        </el-header>
 
-        <!--主容器-->
-        <el-main style="padding: 0">
+        <el-container style="height: 100%">
+
+          <!--侧边导航-->
+          <el-aside width="200px" style="height: 100%;" >
+            <SideNavigation></SideNavigation>
+          </el-aside>
+
+          <!--主容器-->
+          <el-main style="padding: 0">
             <router-view></router-view>
-        </el-main>
+          </el-main>
+        </el-container>
       </el-container>
-    </el-container>
-    <el-drawer
-            direction="ltr"
-            :show-close="false"
-            :visible.sync="drawer"
-            size="480px">
-      <div style="width: 100%;height: 100%">
-        <daily></daily>
-      </div>
-    </el-drawer>
+      <el-drawer
+              direction="ltr"
+              :show-close="false"
+              :visible.sync="drawer"
+              size="480px">
+        <div style="width: 100%;height: 100%">
+          <daily></daily>
+        </div>
+      </el-drawer>
+    </div>
+
   </div>
 </template>
 
@@ -38,6 +46,7 @@ import TopNavigation from './components/TopNavigation/TopNavigation'
 import SideNavigation from './components/SideNavigation/SideNavigation'
 import daily from './components/MainContainer/Daily/daily'
 import { EventBus } from './tools/EventBus'
+import loginPage from './components/MainContainer/LoginPage/loginPage'
 
 export default {
   name: 'App',
@@ -46,7 +55,9 @@ export default {
     HelloWorld,
     TopNavigation,
     SideNavigation,
-    daily
+    daily,
+    // eslint-disable-next-line vue/no-unused-components
+    loginPage
   },
   methods:{
     getResolution:function () {
@@ -70,11 +81,16 @@ export default {
   },
   data(){
     return{
-      drawer:false
+      drawer:false,
+      isLogin:false
     }
   },
   mounted() {
+
     this.getResolution();
+
+
+
     EventBus.$on('selectFunctionModule',(msg)=>{
       console.log("点击"+msg+"模块");
       switch (msg) {
@@ -105,7 +121,10 @@ export default {
       this.$router.push('/Article');
       console.log(msg);
     });
-    this.$router.push('/ArticleData');
+    EventBus.$on('login',()=>{
+      this.isLogin=true;
+      this.$router.push('/ArticleData');
+    });
   }
 }
 </script>
@@ -117,6 +136,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+#mainPage{
   height: 100%;
   position: absolute;
   top: 0;

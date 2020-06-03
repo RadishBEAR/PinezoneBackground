@@ -368,6 +368,7 @@
                             {name: '非活跃用户',value: Math.round(that.numberOfAllUsers*(1-res.data))}
                         ];
                         that.option.series[0].data=list;
+                        console.log(that.option.series[0].data);
                         that.chart = that.$echarts.init(document.getElementById('piegraph'));
                         that.chart.setOption(that.option);
                     }
@@ -466,8 +467,8 @@
             },
         },
         mounted() {
-            this.getSexRatio();
             this.getUserActivity();
+            this.getSexRatio();
             this.getActiveUsers();
             this.getActivePeriod();
             this.getDailyActivity();
